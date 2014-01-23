@@ -64,16 +64,17 @@ This is basically an adaption of the cli tridecimator from
 vcglib
 }
 \examples{
-require(rgl)
 data(humface)
 ##reduce faces to 50\%
-decimface <- vcgQEdecim(humface, tarface=10000, normcheck = FALSE)
+decimface <- vcgQEdecim(humface, percent=0.5, normcheck = TRUE)
 ## view
 \dontrun{
+require(rgl)
 shade3d(decimface, col=3)
-}
+
 ## some light smoothing
 decimface <- vcgSmooth(decimface,iteration = 1)
+}
 }
 \author{
 Stefan Schlager

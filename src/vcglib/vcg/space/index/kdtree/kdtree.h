@@ -54,20 +54,20 @@ public:
 
 	struct Node
 	{
-		union namedunion{
+	  //union {
                         //standard node
-			struct namedstruct0{
+			//struct {
 				Scalar splitValue;
 				unsigned int firstChildId:24;
 				unsigned int dim:2;
 				unsigned int leaf:1;
-			};
+		  //};
                         //leaf
-			struct namedstruct1{
+		  //struct {
 				unsigned int start;
 				unsigned short size;
-			};
-                };
+			  //	};
+	  // };
 	};
 	typedef std::vector<Node> NodeList;
 

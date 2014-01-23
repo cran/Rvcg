@@ -4,7 +4,7 @@
 #' @param mesh triangular mesh of class 'mesh3d'
 #' @param sel integer select cleaning type (see "details")
 #' @param tol numeric value determining Vertex Displacement Ratio used for splitting non-manifold vertices.
-#' @details available options are: 0 = only duplicated vertices and faces are removed (always applied before cleaning). 1=remove unreferenced vertices, 2 = Remove non-manifold Faces, 3 = Remove degenerate faces, 4 = Remove non-manifold vertices, 5 = Split non-manifold vertices by threshold.
+#' @details available options are: 0 = only duplicated vertices and faces are removed (always applied before cleaning). 1 = remove unreferenced vertices, 2 = Remove non-manifold Faces, 3 = Remove degenerate faces, 4 = Remove non-manifold vertices, 5 = Split non-manifold vertices by threshold.
 #' @return cleaned mesh
 #' @examples
 #' data(humface)
@@ -23,8 +23,11 @@ vcgClean <- function(mesh, sel = 0,tol=0)
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
         vb <- mesh$vb[1:3,]
         it <- mesh$it - 1
+        if (!is.matrix(vb))
+            stop("mesh has no vertices")
         dimit <- dim(it)[2]
         dimvb <- dim(vb)[2]
+        storage.mode(tol) <- "double"
         storage.mode(it) <- "integer"
         storage.mode(sel) <- "integer"
         tmp <- .Call("Rclean", vb, it, sel, tol)
