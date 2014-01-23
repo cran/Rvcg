@@ -1,6 +1,6 @@
-#' calculate average edge length of a triangular mesh
+#' calculates the average edge length of a triangular mesh
 #' 
-#' calculate average edge length of a triangular mesh, by iterating over all
+#' calculates the average edge length of a triangular mesh, iterating over all
 #' faces.
 #' 
 #' 
@@ -25,6 +25,10 @@ vcgMeshres <- function(mesh)
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
         vb <- mesh$vb[1:3,]
         it <- mesh$it-1
+        if (!is.matrix(vb))
+            stop("mesh has no vertices")
+        if (!is.matrix(it))
+            stop("mesh has no faces")
         tmp <- .Call("Rmeshres",vb,it)
         return(tmp)
     }

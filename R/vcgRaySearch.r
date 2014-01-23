@@ -1,12 +1,12 @@
 #' check if a mesh is intersected by a set of rays
 #'
 #' check if a mesh is intersected by a set of rays (stored as normals)
-#' @param x a triangular mesh of class 'mesh3d' or a list containing vertices and vertex normals (fitting the naming of 'mesh3d'.
+#' @param x a triangular mesh of class 'mesh3d' or a list containing vertices and vertex normals (fitting the naming conventions of 'mesh3d'). In the second case x must contain x$vb = 3 x n matrix containing 3D-coordinates and x$normals = 3 x n matrix containing normals associated with x$vb.
 #' @param mesh triangular mesh to be intersected.
 #' @param mintol minimum distance to target mesh
 #' @param maxtol maximum distance to search along ray
 #' @param mindist search both ways (ray and -ray) and select closest point.
-#' @details project a mesh along a set of given rays (stored as normals) onto a target and return the hit points as well as information if the target mesh was hit at all. If nothing is hit along the ray(within the given thresholds), the ordinary closest point's value will be returned and the corresponding entry in \code{quality} will be zero.
+#' @details \code{vcgRaySearch} projects a mesh (or set of 3D-coordinates) along a set of given rays (stored as normals) onto a target and return the hit points as well as information if the target mesh was hit at all. If nothing is hit along the ray(within the given thresholds), the ordinary closest point's value will be returned and the corresponding entry in \code{quality} will be zero.
 #' @return list with following items:
 #' \item{vb }{4 x n matrix containing intersection points}
 #' \item{normals }{4 x n matrix containing homogenous coordinates of normals at intersection points}
@@ -38,14 +38,20 @@ vcgRaySearch <- function(x, mesh, mintol=0, maxtol=1e15, mindist=FALSE)
   dimit <- dim(it)[2]
   dimvb <- dim(vb)[2]
   storage.mode(it) <- "integer"
-  if (is.null(x$normals))
-      stop("input is lacking rays (stored as normals)")
+  if (!is.matrix(x$vb))
+      stop("x has no coordinates)")
+  if (!is.matrix(x$normals))
+      stop("x is lacking rays (stored as normals)")
+  if (!is.matrix(vb))
+      stop("mesh has no vertices")
+  if (!is.matrix(it))
+      stop("mesh has no faces")
   clost <- x$vb[1:3,]
   normals <- x$normals[1:3,]
   clostDim <- ncol(clost)
-  dis <- rep(0,clostDim)
-  hit <- dis
-  storage.mode(hit) <- "integer"
+  maxtol <- as.numeric(maxtol)
+  mintol <- as.numeric(mintol)
+  mindist <- as.logical(mindist)
   tmp <- .Call("Rintersect",vb,it,clost,normals,mintol, maxtol, mindist)
   x$vb <- rbind(tmp$vb,1)
   x$normals <- rbind(tmp$normals,1)

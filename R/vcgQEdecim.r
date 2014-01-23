@@ -28,18 +28,19 @@
 #' @seealso \code{\link{vcgSmooth}}
 #' @keywords ~kwd1 ~kwd2
 #' @examples
+#'
 #' 
-#' require(rgl)
 #' data(humface)
 #' ##reduce faces to 50% 
-#' decimface <- vcgQEdecim(humface, tarface=10000, normcheck = FALSE)
+#' decimface <- vcgQEdecim(humface, percent=0.5, normcheck = TRUE)
 #' ## view
 #' \dontrun{
+#' require(rgl)
 #' shade3d(decimface, col=3)
-#' }
+#' 
 #' ## some light smoothing
 #' decimface <- vcgSmooth(decimface,iteration = 1)
-#'  
+#' } 
 #' @export vcgQEdecim
 vcgQEdecim <- function(mesh,tarface=NULL,percent=NULL,edgeLength=NULL, topo=TRUE,quality=TRUE,bound=TRUE, optiplace = TRUE, scaleindi = TRUE, normcheck = FALSE, safeheap =FALSE, qthresh=0.1, boundweight = 0.5, normalthr = pi/2)
     {
@@ -51,6 +52,10 @@ vcgQEdecim <- function(mesh,tarface=NULL,percent=NULL,edgeLength=NULL, topo=TRUE
         dimit <- ncol(it)
         outmesh <- list()
         class(outmesh) <- "mesh3d"
+         if (!is.matrix(vb))
+            stop("mesh has no vertices")
+        if (!is.matrix(it))
+            stop("mesh has no faces")
         
         if (is.null(tarface) && is.null(percent)&& is.null(edgeLength))
             stop("please enter decimation option")
@@ -71,7 +76,9 @@ vcgQEdecim <- function(mesh,tarface=NULL,percent=NULL,edgeLength=NULL, topo=TRUE
             }
         ##concatenate parameters
         boolparams <- c(topo, quality, bound, optiplace, scaleindi, normcheck, safeheap)
+        storage.mode(boolparams) <- "logical"
         doubleparams <- c(qthresh, boundweight, normalthr)
+        storage.mode(doubleparams) <- "double"
 ###tmp <- .C("RQEdecim",vb,ncol(vb),it,ncol(it),tarface,vb,as.integer(topo),as.integer(quality),as.integer(bound))
         tmp <- .Call("RQEdecim", vb, it, tarface, boolparams, doubleparams)
         outmesh$vb <- rbind(tmp$vb,1)

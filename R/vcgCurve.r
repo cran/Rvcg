@@ -1,6 +1,6 @@
 #' calculate curvature of a triangular mesh
 #'
-#' calculate curvature of a triangular mesh
+#' calculate curvature of faces/vertices of a triangular mesh using various methods.
 #'
 #' @param mesh triangular mesh (object of class 'mesh3d')
 #'
@@ -29,6 +29,11 @@ vcgCurve <- function(mesh)
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
         vb <- mesh$vb[1:3,]
         it <- mesh$it - 1
+        if (!is.matrix(vb))
+            stop("mesh has no vertices")
+        if (!is.matrix(it))
+            stop("mesh has no faces")
+        
         dimit <- dim(it)[2]
         dimvb <- dim(vb)[2]
         storage.mode(it) <- "integer"
