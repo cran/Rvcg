@@ -7,8 +7,9 @@
 #' @param file character: file to be read.
 #' @param updateNormals logical: if TRUE and the imported file contais faces,
 #' vertex normals will be (re)calculated. Otherwise, normals will be a matrix containing zeros.
-#' @param readcolor if TRUE, vertex colors will be read if available, otherwise all vertices will be colored white.
-#' @param clean if TRUE, duplicated and unreferenced vertices are removed (be careful when importing point clouds).
+#' @param readcolor if TRUE, vertex colors and texture (face and vertex) coordinates will be processed - if available, otherwise all vertices will be colored white.
+#' @param clean if TRUE, duplicated and unreferenced vertices as well as duplicate faces are removed (be careful when importing point clouds).
+#' @note currently only meshes with either color or texture can be processed. If both are present, the function will mark the mesh as non-readable.
 #' @return Object of class "mesh3d"
 #' 
 #' with:
@@ -29,8 +30,10 @@ vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE)
     ext <- substr(file,ncfile-2,ncfile)
     file <- path.expand(file)
     x <- file
+    if (length(x) != 1)
+        stop("only one file at a time please")
     if (! file.exists(x))
-        stop("no such file")
+        stop(paste0("file ", file," does not exist"))
     updateNormals <- as.logical(updateNormals)
     readcolor <- as.logical(readcolor)
     clean <- as.logical(clean)
@@ -41,20 +44,40 @@ vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE)
         stop("mesh is not readable")
     out <- list()
     class(out) <- "mesh3d"
+    
     out$vb <- rbind(matrix(tmp$vb,3,length(tmp$vb)/3),1)
-    out$it <- matrix(tmp$it,3,(length(tmp$it)/3))+1
-    out$normals <- rbind(matrix(tmp$normals,3,length(tmp$normals)/3),1)
-    if (readcolor)
-        {
-          colvec <- out$colors
-          out$material <- list()
-          colvec <- rgb(colvec[1,],colvec[2,],colvec[3,],maxColorValue=255)
-          colfun <- function(x)
-            {
-              x <- colvec[x]
-              return(x)
+    if (length(tmp$it))
+        out$it <- matrix(tmp$it,3,(length(tmp$it)/3))+1
+    if (length(tmp$normals))
+        out$normals <- rbind(matrix(tmp$normals,3,length(tmp$normals)/3),1)
+    if (readcolor) {
+        out$material <- list()
+            if (length(tmp$colors)) {
+                colvec <- matrix(tmp$colors,3,(length(tmp$colors)/3))
+                colvec <- rgb(colvec[1,],colvec[2,],colvec[3,],maxColorValue=255)
+                colfun <- function(x)
+                    {
+                        x <- colvec[x]
+                        return(x)
+                    }
+                out$material$color <- matrix(colfun(out$it),dim(out$it))
             }
-          out$material$color <- matrix(colfun(out$it),dim(out$it))
+            if (length(tmp$texfile)) {
+                if (length(grep(".jpg",ignore.case = T,tmp$texfile))) {
+                    message("please convert texture images to png format")
+                    tmp$texfile <- gsub("jpg","png",tmp$texfile)
+                }
+                if (length(tmp$texfile) > 1)
+                    message("only single texture files supported, only first one stored")
+                out$material$texture <- tmp$texfile[1]
+                out$texcoords <- matrix(tmp$texcoord,2,length(tmp$texcoord)/2)
+                if (ncol(out$texcoords) > ncol(out$vb))
+                    out$texcoords <- out$texcoords[,1:ncol(out$vb)]
+            }
+          #colrange <- range(out$material$color)
+       #   if (colrange[1] == colrange[2])
+        #      out$material$color <- NULL
+          
         }
     return(out)
 }

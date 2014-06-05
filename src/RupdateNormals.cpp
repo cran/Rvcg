@@ -20,17 +20,14 @@ RcppExport SEXP RupdateNormals(SEXP vb_, SEXP it_, SEXP type_, SEXP pointcloud_)
   // allocate mesh and fill it
   int check = Rvcg::IOMesh<MyMesh>::RvcgReadR(m,vb_,it_);
    Rcpp::NumericMatrix normals(3,m.vn);
-  /*m.vert.EnableVFAdjacency();
-    m.face.EnableFFAdjacency();
-    m.face.EnableVFAdjacency();*/
    if (check < 0) {
           Rprintf("%s\n","Info: mesh has no faces and/or no vertices");
 	  return wrap(1);
    } else if (check == 1) {
      Rprintf("%s\n","Info: mesh has no faces normals for point clouds are computed");
      PointCloudNormal<MyMesh>::Param p;
-     p.fittingAdjNum = pointcloud(0);
-     p.smoothingIterNum = pointcloud(1);
+     p.fittingAdjNum = pointcloud[0];
+     p.smoothingIterNum = pointcloud[1];
      p.viewPoint = Point3f(0,0,0);
      p.useViewPoint = false;
      PointCloudNormal<MyMesh>::Compute(m,p);

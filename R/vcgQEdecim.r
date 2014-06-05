@@ -32,7 +32,7 @@
 #' 
 #' data(humface)
 #' ##reduce faces to 50% 
-#' decimface <- vcgQEdecim(humface, percent=0.5, normcheck = TRUE)
+#' decimface <- vcgQEdecim(humface, percent=0.5)
 #' ## view
 #' \dontrun{
 #' require(rgl)
@@ -42,12 +42,12 @@
 #' decimface <- vcgSmooth(decimface,iteration = 1)
 #' } 
 #' @export vcgQEdecim
-vcgQEdecim <- function(mesh,tarface=NULL,percent=NULL,edgeLength=NULL, topo=TRUE,quality=TRUE,bound=TRUE, optiplace = TRUE, scaleindi = TRUE, normcheck = FALSE, safeheap =FALSE, qthresh=0.1, boundweight = 0.5, normalthr = pi/2)
+vcgQEdecim <- function(mesh,tarface=NULL,percent=NULL,edgeLength=NULL, topo=FALSE,quality=TRUE,bound=FALSE, optiplace = TRUE, scaleindi = TRUE, normcheck = FALSE, safeheap =FALSE, qthresh=0.3, boundweight = 1, normalthr = pi/2)
     {
         if (!inherits(mesh,"mesh3d"))
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
         doit <- TRUE
-        vb <- mesh$vb[1:3,]
+        vb <- mesh$vb[1:3,,drop=FALSE]
         it <- mesh$it-1
         dimit <- ncol(it)
         outmesh <- list()

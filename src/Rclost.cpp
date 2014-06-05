@@ -31,15 +31,17 @@ RcppExport SEXP Rclost(SEXP vb_ , SEXP it_, SEXP ioclost_, SEXP sign_, SEXP bord
     Rprintf("%s\n", "Target mesh has no triangular faces");
     return wrap(1);
   } else if (checkit >= 0) {
-    Rvcg::IOMesh<PcMesh>::RvcgReadR(refmesh, ioclost_);  
-  tri::UpdateBounding<MyMesh>::Box(m);
-  tri::UpdateNormal<MyMesh>::PerFaceNormalized(m);//very important !!!
+    Rvcg::IOMesh<PcMesh>::RvcgReadR(refmesh, ioclost_); 
+    m.face.EnableNormal();
+ 
+    tri::UpdateBounding<MyMesh>::Box(m);
+    tri::UpdateNormal<MyMesh>::PerFaceNormalized(m);//very important !!!
   //tri::UpdateNormal<MyMesh>::PerVertexAngleWeighted(m);
   tri::UpdateNormal<MyMesh>::PerVertexNormalized(m);
-  if (smooth)
+  if (smooth) {
     tri::Smooth<MyMesh>::VertexNormalLaplacian(m,2,false);
-  
-  tri::UpdateNormal<MyMesh>::NormalizePerVertex(m);
+    tri::UpdateNormal<MyMesh>::NormalizePerVertex(m);
+  }
   float maxDist = m.bbox.Diag()*2;
   float minDist = 1e-10;
   vcg::tri::FaceTmark<MyMesh> mf; 
@@ -48,8 +50,11 @@ RcppExport SEXP Rclost(SEXP vb_ , SEXP it_, SEXP ioclost_, SEXP sign_, SEXP bord
   TriMeshGrid static_grid;    
   static_grid.Set(m.face.begin(), m.face.end());
   if (borderchk) { //update Border flags
-  tri::UpdateFlags<MyMesh>::FaceBorderFromNone(m);
-  tri::UpdateSelection<MyMesh>::FaceFromBorderFlag(m);
+    m.vert.EnableVFAdjacency();
+    m.face.EnableFFAdjacency();
+    m.face.EnableVFAdjacency();
+    tri::UpdateFlags<MyMesh>::FaceBorderFromNone(m);
+    tri::UpdateSelection<MyMesh>::FaceFromBorderFlag(m);
   }
   //setup return structure
   Rcpp::NumericMatrix normals(3,refmesh.vn), barycoord(3,refmesh.vn);
@@ -65,16 +70,16 @@ RcppExport SEXP Rclost(SEXP vb_ , SEXP it_, SEXP ioclost_, SEXP sign_, SEXP bord
   vcg::tri::Append<PcMesh,PcMesh>::Mesh(outmesh,refmesh);
   PcMesh::CoordType tt;
   for(i=0; i < refmesh.vn; i++) {
-    border(i) = 0;
+    border[i] = 0;
     Point3f& currp = refmesh.vert[i].P();
     Point3f& clost = outmesh.vert[i].P();
     MyFace* f_ptr= GridClosest(static_grid, PDistFunct, mf, currp, maxDist, minDist, clost);
     if (f_ptr) {
       if (borderchk) {
 	if ((*f_ptr).IsS())
-	  border(i) = 1;
+	  border[i] = 1;
       }
-      faceptr(i) = indices[f_ptr];
+      faceptr[i] = indices[f_ptr];
 	int f_i = vcg::tri::Index(m, f_ptr);
 	tt = currp*0;
 	
@@ -105,7 +110,7 @@ RcppExport SEXP Rclost(SEXP vb_ , SEXP it_, SEXP ioclost_, SEXP sign_, SEXP bord
 	Point3f dif = clost - currp;
 	float sign = dif.dot(tt);	
 	if (sign < 0)
-	  dis(i) = -dis[i] ;
+	  dis[i] = -dis[i] ;
       }
       //write back output
       ioclost(0,i) =clost[0];
