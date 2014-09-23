@@ -1,4 +1,6 @@
 #include "typedef.h"
+#include "Volume.h"
+
 //#include "RvcgIO.h"
 #include <Rcpp.h>
 //#include <RcppArmadillo.h>
@@ -21,9 +23,10 @@ using namespace Rcpp;
 //#include "Voxel.h"
 
 RcppExport SEXP RMarchC(SEXP array_, SEXP lower_, SEXP upper_) {
+  try {
   IntegerVector vecArray(array_);
-  int lower = as<double>(lower_);
-  int upper = as<double>(upper_);
+  double lower = as<double>(lower_);
+  double upper = as<double>(upper_);
   
   IntegerVector arrayDims = vecArray.attr("dim");
   //icube myCube(vecArray.begin(), arrayDims[0],arrayDims[1], arrayDims[2], false);
@@ -36,7 +39,7 @@ FaceIterator fi;
   m.face.EnableVFAdjacency();*/
 int i,j,k;
 
-typedef SimpleVolume<SimpleVoxel> MyVolume;
+typedef MySimpleVolume<MySimpleVoxel> MyVolume;
 MyVolume	volume;
 typedef vcg::tri::TrivialWalker<MyMesh,MyVolume>	MyWalker;
 typedef vcg::tri::MarchingCubes<MyMesh, MyWalker>	MyMarchingCubes;
@@ -69,7 +72,6 @@ walker.BuildMesh<MyMarchingCubes>(m, volume, mc, 0.0);
   Rcpp::NumericMatrix vbout(3,m.vn), normals(3,m.vn);
   Rcpp::IntegerMatrix itout(3,m.fn);
   
-Rprintf("%d\n",m.vn);
   vi=m.vert.begin();
   for (i=0;  i < m.vn; i++) {
     indiceout[vi] = i;
@@ -98,6 +100,13 @@ Rprintf("%d\n",m.vn);
 			    Rcpp::Named("it") = itout,
 			    Rcpp::Named("normals") = normals
 			      );
+ } catch (std::exception& e) {
+    ::Rf_error( e.what());
+    return wrap(1);
+  } catch (...) {
+    ::Rf_error("unknown exception");
+  }
+
 }
  
 

@@ -9,6 +9,7 @@
 #' vertex normals will be (re)calculated. Otherwise, normals will be a matrix containing zeros.
 #' @param readcolor if TRUE, vertex colors and texture (face and vertex) coordinates will be processed - if available, otherwise all vertices will be colored white.
 #' @param clean if TRUE, duplicated and unreferenced vertices as well as duplicate faces are removed (be careful when importing point clouds).
+#' @param silent logical, if TRUE no console output is issued.
 #' @note currently only meshes with either color or texture can be processed. If both are present, the function will mark the mesh as non-readable.
 #' @return Object of class "mesh3d"
 #' 
@@ -25,7 +26,8 @@
 #' @keywords ~kwd1 ~kwd2
 #' @export 
 
-vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE) {
+vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE,silent=FALSE) {
+     
     ncfile <- nchar(file)
     ext <- substr(file,ncfile-2,ncfile)
     file <- path.expand(file)
@@ -34,14 +36,22 @@ vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE)
         stop("only one file at a time please")
     if (! file.exists(x))
         stop(paste0("file ", file," does not exist"))
+    ## get file and folder names and cd to target directory
+    wdold <- getwd()
+    folder <- dirname(file)
+    file <- basename(file)
+    setwd(folder)
+    
     updateNormals <- as.logical(updateNormals)
     readcolor <- as.logical(readcolor)
     clean <- as.logical(clean)
 
 
-    tmp <- .Call("RallRead", file, updateNormals, readcolor, clean)
+    tmp <- .Call("RallRead", file, updateNormals, readcolor, clean, silent)
     if (!is.list(tmp))
         stop("mesh is not readable")
+    ## go back to current wd
+    setwd(wdold)
     out <- list()
     class(out) <- "mesh3d"
     
@@ -65,7 +75,7 @@ vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE)
             if (length(tmp$texfile)) {
                 if (length(grep(".jpg",ignore.case = T,tmp$texfile))) {
                     message("please convert texture images to png format")
-                    tmp$texfile <- gsub("jpg","png",tmp$texfile)
+                    tmp$texfile <- paste0(folder,"/",gsub("jpg","png",tmp$texfile))
                 }
                 if (length(tmp$texfile) > 1)
                     message("only single texture files supported, only first one stored")
@@ -74,10 +84,6 @@ vcgImport <- function(file, updateNormals = TRUE, readcolor=FALSE, clean = TRUE)
                 if (ncol(out$texcoords) > ncol(out$vb))
                     out$texcoords <- out$texcoords[,1:ncol(out$vb)]
             }
-          #colrange <- range(out$material$color)
-       #   if (colrange[1] == colrange[2])
-        #      out$material$color <- NULL
-          
-        }
+    }
     return(out)
 }

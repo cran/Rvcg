@@ -10,6 +10,7 @@ using namespace Rcpp;
 
 RcppExport SEXP Rclean(SEXP vb_, SEXP it_, SEXP type_, SEXP tol_, SEXP silent_)
 {
+  try {
   // declare Mesh and helper variables
   //int select = Rcpp::as<int>(type_);  
   IntegerVector select(type_);
@@ -79,6 +80,15 @@ RcppExport SEXP Rclean(SEXP vb_, SEXP it_, SEXP type_, SEXP tol_, SEXP silent_)
       int merge =tri::Clean<TopoMyMesh>::MergeCloseVertex(m,tol);
       if (!silent)
 	Rprintf("merged %d close vertices\n",merge);
+    
+    } else if (cnt == 7) { 
+      tri::UpdateTopology<TopoMyMesh>::FaceFace(m);
+      tri::UpdateTopology<TopoMyMesh>::VertexFace(m);
+      bool a = false;
+      bool b = false;
+      tri::Clean<TopoMyMesh>::OrientCoherentlyMesh(m, a ,b);
+      //if (!silent)
+	//Rprintf("merged %d close vertices\n",merge);
     }
   }
     
@@ -130,6 +140,12 @@ RcppExport SEXP Rclean(SEXP vb_, SEXP it_, SEXP type_, SEXP tol_, SEXP silent_)
 			    Rcpp::Named("normals") = normals,
 			    Rcpp::Named("remvert") = remvert
 			    );
+  } catch (std::exception& e) {
+    ::Rf_error( e.what());
+    return wrap(1);
+  } catch (...) {
+    ::Rf_error("unknown exception");
+  }
 }
  
 

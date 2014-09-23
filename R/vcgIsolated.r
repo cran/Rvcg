@@ -11,6 +11,7 @@
 #' with the most faces is kept. 
 #' @param diameter numeric: all connected pieces smaller diameter are removed
 #' removed. \code{diameter = 0} removes all component but the largest ones. This option overrides the option \code{facenum}.
+#' @param silent logical, if TRUE no console output is issued.
 #' @return returns the reduced mesh.
 #' @author Stefan Schlager
 #' @seealso \code{\link{vcgPlyRead}}
@@ -23,7 +24,7 @@
 #' 
 #' 
 #' @export vcgIsolated
-vcgIsolated <- function(mesh,facenum=NULL,diameter=NULL) {
+vcgIsolated <- function(mesh,facenum=NULL,diameter=NULL,silent=FALSE) {
     if (!inherits(mesh,"mesh3d"))
         stop("argument 'mesh' needs to be object of class 'mesh3d'")
     if (is.null(facenum))
@@ -36,15 +37,12 @@ vcgIsolated <- function(mesh,facenum=NULL,diameter=NULL) {
     storage.mode(facenum) <- "integer"
     storage.mode(diameter) <- "double"
 
+    mesh <- meshintegrity(mesh,facecheck=TRUE)
     vb <- mesh$vb[1:3,,drop=FALSE]
     it <- mesh$it-1
-    if (!is.matrix(vb))
-        stop("mesh has no vertices")
-    if (!is.matrix(it))
-        stop("mesh has no faces")
     dimit <- dim(it)[2]
     dimvb <- dim(vb)[2]
-    tmp <- .Call("Risolated", vb, it, diameter, facenum)
+    tmp <- .Call("Risolated", vb, it, diameter, facenum,silent)
     class(tmp) <- "mesh3d"
     tmp$vb <- rbind(tmp$vb,1)
     tmp$it <- tmp$it

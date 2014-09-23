@@ -3,8 +3,8 @@ Type: Package
 Title: Manipulations of triangular meshes (smoothing, quadric edge
         collapse decimation, im- and export of various mesh
         file-formats, cleaning, etc.) based on the VCGLIB API.
-Version: 0.8
-Date: 2014-06-05
+Version: 0.9
+Date: 2014-09-23
 Author: Stefan Schlager; the authors of VCGLIB for the included version of the
     code
 Maintainer: Stefan Schlager <zarquon42@gmail.com>
@@ -30,7 +30,7 @@ Copyright: see files COPYRIGHTS for detailed information
 LazyLoad: yes
 Biarch: yes
 URL: http://github.com/zarquon42b/Rvcg, http://vcg.sf.net/
-Packaged: 2014-06-05 07:09:15 UTC; schlager
+Packaged: 2014-09-23 10:02:39 UTC; schlager
 NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2014-06-05 09:46:11
+Date/Publication: 2014-09-23 12:44:25
