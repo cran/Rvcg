@@ -12,6 +12,8 @@
 #' points are returned.
 #' @param smoothNormals logical: if TRUE, laplacian smoothed normals are used.
 #' @param borderchk logical: request checking if the hit face is at the border of the mesh.
+#' @param tol maximum distance to search. If distance is beyond that, the original point will be kept and the distance set to 1e12.
+#' @param ... additional parameters, currently unused.
 #' @return returns an object of class "mesh3d" with:
 #' \item{vb }{4 x n matrix containing n vertices as homolougous coordinates.}
 #' \item{normals }{4 x n matrix containing vertex normals.}
@@ -39,7 +41,7 @@
 #' 
 #' 
 #' @export vcgClost
-vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, borderchk = FALSE)
+vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, borderchk = FALSE,tol=0,...)
     {
         if (!inherits(mesh,"mesh3d"))
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
@@ -50,12 +52,12 @@ vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, bo
         dimvb <- dim(vb)[2]
         
         if (is.matrix(x)) {
-            clost <- t(x[,1:3])
+            clost <- t(x[,1:3,drop=FALSE])
             x <- list()
             x$vb <- clost
             class(x) <- "mesh3d"
         } else if (inherits(x,"mesh3d")) {
-            clost <- x$vb[1:3,]
+            clost <- x$vb[1:3,,drop=FALSE]
             if (!is.matrix(clost))
             stop("x has no vertices")
         } else
@@ -65,7 +67,7 @@ vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, bo
             stop("please provide sensible input")
         
         storage.mode(clost) <- "double"
-        tmp <- .Call("Rclost",vb, it, clost,sign,borderchk,barycentric,smoothNormals)
+        tmp <- .Call("Rclost",vb, it, clost,sign,borderchk,barycentric,smoothNormals,tol)
         x$vb <- rbind(tmp$ioclost,1)
         x$normals <- rbind(tmp$normals,1)
         chcknorm <- which(is.nan(x$normals))

@@ -24,21 +24,26 @@ RcppExport SEXP Rkdtree(SEXP vb0_, SEXP vb1_, SEXP k_) {
   }
   
 }
-RcppExport SEXP RclosestKD(SEXP vb_, SEXP it_, SEXP ioclost_, SEXP k_, SEXP sign_, SEXP smooth_, SEXP barycentric_, SEXP borderchk_, SEXP nofP_= wrap(16),SEXP mDepth_= wrap(64)) {
+RcppExport SEXP RclosestKD(SEXP vb_, SEXP it_, SEXP ioclost_, SEXP itclost_, SEXP k_, SEXP sign_, SEXP smooth_, SEXP barycentric_, SEXP borderchk_, SEXP nofP_= wrap(16),SEXP mDepth_= wrap(64),SEXP angdev_=wrap(0), SEXP wnorm_=wrap(true)) {
   try {
     bool smooth = as<bool>(smooth_);
     bool barycentric = as<bool>(barycentric_);
     bool borderchk = as<bool>(borderchk_);
+    bool wnorm = as<bool>(wnorm_);
     unsigned int nofP = as<unsigned int >(nofP_);
     unsigned int mDepth = as<unsigned int >(mDepth_);
     int k = as<int>(k_);
     bool sign = as<bool>(sign_);
     MyMesh target;
-    PcMesh query, bary;
+    PcMesh  bary;
+    MyMesh query;
     int checkit = Rvcg::IOMesh<MyMesh>::RvcgReadR(target,vb_,it_);
-
+    double angdev = as<double>(angdev_);
     target.face.EnableNormal();
-    checkit = Rvcg::IOMesh<PcMesh>::RvcgReadR(query, ioclost_);
+    checkit = Rvcg::IOMesh<MyMesh>::RvcgReadR(query, ioclost_,itclost_);
+    if (angdev > 0) {
+      tri::UpdateNormal<MyMesh>::PerVertexNormalized(query);
+    }
     tri::UpdateNormal<MyMesh>::PerFaceNormalized(target);
     tri::UpdateNormal<MyMesh>::PerVertexNormalized(target);
     if (smooth) {
@@ -50,31 +55,65 @@ RcppExport SEXP RclosestKD(SEXP vb_, SEXP it_, SEXP ioclost_, SEXP k_, SEXP sign
       tri::UpdateSelection<MyMesh>::FaceFromBorderFlag(target);
     }
     Rvcg::KDtree< MyMesh, PcMesh >::getBary(target, bary);
-    List indices = Rvcg::KDtree< PcMesh, PcMesh >::KDtreeIO(bary, query, k,nofP, mDepth);
+    List indices = Rvcg::KDtree< PcMesh, MyMesh >::KDtreeIO(bary, query, k,nofP, mDepth);
     IntegerMatrix ktree = indices["index"];
     NumericMatrix iomat(3,query.vn), normals(3,query.vn);
     NumericMatrix barycoord(3,query.vn);
     IntegerVector border(query.vn), faceptr(query.vn);
     std::fill(border.begin(), border.end(),0);
-    PcMesh::VertexIterator vi = query.vert.begin();
+    MyMesh::VertexIterator vi = query.vert.begin();
     NumericVector distout(query.vn);
+    NumericVector angle(query.vn);
     for (int i = 0; i < query.vn; i++) {
       Point3f clost;
-      PcMesh::CoordType tt;
+      MyMesh::CoordType tt, tmpnorm;
       MyFace::ScalarType dist = 1e12;
       MyFace::ScalarType distance_old = 1e12;
       Point3f currp = (*vi).P();
+      clost = currp;
+      float ang;
       Point3f tmp = (*vi).P();
       for (int j=0; j < k; j++) {
 	if (ktree(i,j) != -1) {
 	  dist = 1e12;
 	  int fptr = ktree(i,j);
 	  PointDistanceBase(target.face[fptr],currp, dist, tmp);
+	  
+	  // check normal deviation and if it deviates from threshold, hit point is discarded
+	  // if no point matches criterion, the closest point on the face with the closest barycenter is selected
+	  // and distance set to 1e5
+	  if (  0 < angdev) { 
+	    
+	    MyMesh::CoordType refnorm = (*vi).N();
+	     tmpnorm = clost*0;
+	     if (!wnorm) {
+	       tmpnorm = target.face[fptr].N();
+	     } else {
+	       for (int j=0; j <3;j++) {
+		 Point3f vdist = target.face[fptr].V(j)->P() - tmp;
+		 float weight = sqrt(vdist.dot(vdist));
+		 if (weight > 0)
+		   weight = 1/weight;
+		 else 
+		   weight = 1e12;
+		 tmpnorm += target.face[fptr].V(j)->N()*weight;
+	       }
+	     }
+	     ang = Angle(tmpnorm,refnorm);
+	      
+	      //Rprintf("%f\n",ang);
+	    if (ang > angdev)
+	      dist = 1e5;
+	  }
+	  Point3f vdist = target.face[fptr].V(j)->P() - clost;
 	  if (dist < distance_old) {
 	    distance_old = dist;
 	    clost = tmp;
 	    faceptr[i] = fptr;
-	  }
+	    if (angdev > 0)
+	      angle[i] = ang;
+	      
+	    }
 	}
       }
       distout[i] = distance_old;
@@ -98,7 +137,7 @@ RcppExport SEXP RclosestKD(SEXP vb_, SEXP it_, SEXP ioclost_, SEXP k_, SEXP sign
 	tt=tt/vl;
       }   
       // calculate sign for distances
-      if (sign) {
+      if (sign && (distout[i] < 1e5)) {
 	Point3f dif = clost - currp;
 	//float sign = dif.dot(tt);	
 	if (dif.dot(tt) < 0)
@@ -131,7 +170,8 @@ RcppExport SEXP RclosestKD(SEXP vb_, SEXP it_, SEXP ioclost_, SEXP k_, SEXP sign
 			Named("faceptr")= faceptr,
 			Named("barycoord") = barycoord,
 			Named("border") = border, 
-			Named("normals") = normals
+			Named("normals") = normals,
+			Named("angle") = angle
 			);
       
   } catch (std::exception& e) {
@@ -146,11 +186,11 @@ RcppExport SEXP Rbarycenter(SEXP vb_, SEXP it_) {
   try {
     MyMesh m;
     int checkit = Rvcg::IOMesh<MyMesh>::RvcgReadR(m,vb_,it_);
-    PcMesh out;
-    Rvcg::KDtree< MyMesh, PcMesh >::getBary(m, out);
+    MyMesh out;
+    Rvcg::KDtree< MyMesh, MyMesh >::getBary(m, out);
     Rcpp::NumericMatrix barycoord(3,out.vn);
     for (int i = 0; i < out.vn; i++) {
-      PcMesh::CoordType tmp;
+      MyMesh::CoordType tmp;
       tmp = out.vert[i].cP();
       barycoord(0,i) = tmp[0];
       barycoord(1,i) = tmp[1];

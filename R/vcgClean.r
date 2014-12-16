@@ -16,6 +16,7 @@
 #' \item{4 = Remove non-manifold vertices}
 #' \item{5 = Split non-manifold vertices by threshold}
 #' \item{6 = merge close vertices (radius=\code{tol})}
+#' \item{7 = coherently orient faces}
 #' }
 #' @return cleaned mesh with an additional entry
 #' \item{remvert}{vector of length = number of vertices before cleaning. Entries = 1 indicate that this vertex was removed; 0 otherwise.}
@@ -40,14 +41,7 @@ vcgClean <- function(mesh, sel = 0,tol=0,silent=FALSE) {
     dimit <- dim(it)[2]
     dimvb <- dim(vb)[2]
     sel <- as.vector(sel)
-    storage.mode(tol) <- "double"
-    storage.mode(it) <- "integer"
-    storage.mode(sel) <- "integer"
     tmp <- .Call("Rclean", vb, it, sel, tol,silent)
-    tmp$vb <- rbind(tmp$vb,1)
-    tmp$normals <- rbind(tmp$normals,1)
-    class(tmp) <- "mesh3d"
-    ## handle vertex color
     if (!is.null(mesh$material$color)) {
         if (length(tmp$remvert)) {
             colframe <- data.frame(it=1:ncol(mesh$vb))
