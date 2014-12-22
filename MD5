@@ -1,7 +1,7 @@
-ba93ce0d094d2c9448566d4deb4d8d00 *DESCRIPTION
+d5ceb9990a97fca8a798fbce05524bd2 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 c80597ae1063b4263c4a7f87bc78dcdb *NAMESPACE
-fd75ac87d6da16906365cddaa1ac5fe6 *R/Rvcg-package.R
+70cebb56aa887353fae9dd86a1b2c519 *R/Rvcg-package.R
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 2257a4c56d66071b5a19ebc153c4fb8b *R/onUnload.r
 dfce86148da7ec5eef9cea0b75801345 *R/vcgBary.r
@@ -11,9 +11,9 @@ e302d15c2ccd367edd6a04a90671e012 *R/vcgClost.r
 bd51e5d4ede817ac485c185a18d39c79 *R/vcgClostKD.r
 a5b28ce147f12f758260e06639faad5c *R/vcgCurve.r
 6f8ba72a1b5ef717c366fdaa3d44b750 *R/vcgGetEdge.r
-99c0f7552498769417e74518caa86baa *R/vcgImport.r
+6fd407591df92efb09c3f608da1ae4dd *R/vcgImport.r
 fb68224b4fd1cab38f49fc0fb5e0ced1 *R/vcgIsolated.r
-19df96475f2892c4b4750d1f4d5d31e2 *R/vcgIsosurface.r
+173796e28bfa26988757854b880731a0 *R/vcgIsosurface.r
 f4d8e214abb8d201eff86d3265ecb381 *R/vcgKDtree.r
 07c0841bc88b15465b1cd2cf1794988a *R/vcgMeshres.r
 d66bea127d996ae7bd19e9afbbae15ed *R/vcgPlyRead.r
@@ -22,7 +22,7 @@ f5188205fd5666de79586eb6837d45a1 *R/vcgPlyWrite.r
 08d0e58140beda6e8e38b62f018e1db8 *R/vcgRaySearch.r
 ae14128a0dc83560e630dac598cf2ae8 *R/vcgSample.r
 0039f43fbce8db3ba565bd81739532c9 *R/vcgSmooth.r
-b8f8f0d8834ee66ce46ed50566aa2cb6 *R/vcgUniformRemesh.r
+d25e6a826c136caba2d528541a59f1e4 *R/vcgUniformRemesh.r
 176d56efa4e3a63df1ba8a389e597ec5 *R/vcgUpdateNormals.r
 e049bd115b3a56c6c082ba3033bda398 *R/vcgVFadj.r
 dacd545a319b36f40b684879bd7fd652 *README.md
@@ -33,8 +33,8 @@ bb8c1972ee5f14b8c3c55d0dac674591 *configure.win
 ac017cc73f73937437dc6ed3a45df34a *data/dummyhead.rda
 5289d94947630da4e6294cea4106edfa *data/humface.rda
 30ba994d4ad29ff4edcbe6156645633a *inst/COPYRIGHTS
-fa3985c1fd72d5724d91e14b43c3e28d *inst/NEWS.Rd
-3f6ece83a88f7f3dbba166ed17f94157 *man/Rvcg-package.Rd
+d3f534b9cfe97549b582f3dbdc31a289 *inst/NEWS.Rd
+19ff6b308b556eea7e2c7471aebfd867 *man/Rvcg-package.Rd
 5a6630377c4f6ecb09642802a22d7673 *man/dummyhead.Rd
 854575414e3c996d424403a359c48147 *man/humface.Rd
 fdcc8bffdc0e8919c3bda91a67b9a5aa *man/meshintegrity.Rd
@@ -48,7 +48,7 @@ d08a3fa6dc6b556cff25a9a24fa8540b *man/vcgCurve.Rd
 50bcc1536c74d06622e986a0c0c7df9a *man/vcgGetEdge.Rd
 be8410b36b650e486c056714ad6ee8ce *man/vcgImport.Rd
 b6a9264e1dc1fba0a5913e3dc0637c08 *man/vcgIsolated.Rd
-48c5796db78b4443bcdc31187ade2a06 *man/vcgIsosurface.Rd
+91f30d51db4532cf60a4b8a5058faca0 *man/vcgIsosurface.Rd
 a73315891c3d113c939f63872aebd31c *man/vcgKDtree.Rd
 17367b58020498fe74a8cfbcd0e170ff *man/vcgMeshres.Rd
 70f15c29161dfbffdf427a3337911cdf *man/vcgNonBorderEdge.Rd
@@ -59,14 +59,14 @@ cd10608e5076b10b24a7954a7e437816 *man/vcgRaySearch.Rd
 262be3b1ad883645a5130589ee56d4d3 *man/vcgSample.Rd
 a61b59a58f9bbb0db8510575213ca79e *man/vcgSmooth.Rd
 e7ad47db4fe9a2d33b8704c355ee1458 *man/vcgStlWrite.Rd
-f5fa9452c2c79c563c425a13adfcfea4 *man/vcgUniformRemesh.Rd
+26d141b631bd142da6b3d39b0c6c3734 *man/vcgUniformRemesh.Rd
 17e79d8abaa573f888affcb79a6634c2 *man/vcgUpdateNormals.Rd
 b7f15b9eb8afc1cd9c98886a0e4f547c *man/vcgVFadj.Rd
 5c432d889becbc262ecc04213ab4c00b *src/Makevars.in
 e9dda002cf6668265841741911d1c15b *src/Makevars.win
 598bb9eef8214f9a222a8a72a152d5ef *src/RQEdecim.cpp
 bee02deda83ac9ef6053cd85c5fc6e61 *src/RVFadj.cpp
-28e3196064392bd717e5f1cc4d35f31d *src/RallRead.cpp
+e3dbab73997edb03b2aad42d7dc6a9cb *src/RallRead.cpp
 771c7522c1f1d87a5a206cb0f1d63ee3 *src/Rborder.cpp
 291070178afecbb94829487bc502e374 *src/Rclean.cpp
 2b7562135991a9c17c6f4954917462d8 *src/Rclost.cpp
@@ -76,7 +76,7 @@ bed6da80b85ad167a36904523e2832d8 *src/RgetEdge.cpp
 39181be4cdadf6e6353cd4961ce32747 *src/Rintersect.cpp
 07952faea7c1e4d32c5af317a031fa19 *src/Risolated.cpp
 f05479de519baeeae07f05beef387696 *src/Rkdtree.cpp
-053d66e43527bafd00d0b7726bedb5ac *src/Rmarch.cpp
+c7b739fcb0327c020b468a2cbde37093 *src/Rmarch.cpp
 4df2554ca4654038418fc4714d10c931 *src/Rmeshres.cpp
 76e38251090a622273da649b71f082df *src/Rsample.cpp
 20ae1af62b719565d04aebf0d3b9d1ae *src/Rsmooth.cpp
@@ -142,7 +142,7 @@ f1d55c9d6bfa8e975b458ec86413ef43 *src/vcglib/vcg/complex/algorithms/parametrizat
 7e2d596783d54e0ba67f41b24e67fe1b *src/vcglib/vcg/complex/algorithms/parametrization/tangent_field_operators.h
 97afc210f9a294eca8883df3428f83d1 *src/vcglib/vcg/complex/algorithms/parametrization/uv_utils.h
 e121c8a07e243a5c0b005400d930c72f *src/vcglib/vcg/complex/algorithms/parametrization/voronoi_atlas.h
-af3a10139da81e9254e2bcc1cd23aa17 *src/vcglib/vcg/complex/algorithms/point_sampling.h
+7675a9a0393a9f8969f7d4d1c168f827 *src/vcglib/vcg/complex/algorithms/point_sampling.h
 effeae2328db19c8138d85cd7f535e08 *src/vcglib/vcg/complex/algorithms/pointcloud_normal.h
 7293ccb148fcc30696e870e2b17ca49f *src/vcglib/vcg/complex/algorithms/polygon_polychord_collapse.h
 8d88dd23f9440df8ee12773a9896c7f1 *src/vcglib/vcg/complex/algorithms/polygon_support.h

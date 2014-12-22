@@ -70,23 +70,49 @@ RcppExport SEXP RallRead(SEXP filename_, SEXP updateNormals_, SEXP colorread_, S
     if (err2) {
       return wrap(1);
     } else { 
-      if (m.fn == 0)
+      if (m.fn == 0) {
 	updateNormals = false;
-      SimpleTempData<MyMeshImport::VertContainer,int> indices(m.vert);
-    
+	clean = false;
+      }
+      
+      
+      // do texture processing
+      bool tex = false;
+      std::vector<float> texvec;
+      std::vector<string> texfile;
+      if (m.textures.size() > 0 && colorread) {
+
+	if (!silent && clean)
+	  Rprintf("To avoid wrong assignment of texture, cleaning has been disabled\n");
+	
+	clean = false;
+	if (!VertTex && WedgeTex) {
+	  m.vert.EnableTexCoord();	
+	  tri::AttributeSeam::SplitVertex(m, ExtractVertex, CompareVertex);
+	  vcg::tri::Allocator< MyMeshImport >::CompactVertexVector(m);
+	  vcg::tri::Allocator< MyMeshImport >::CompactFaceVector(m);
+	  texfile = m.textures;
+	  texvec.resize(2*m.vn);
+	}
+	VertexIterator vi=m.vert.begin();
+	for (int i=0;  i < m.vn; i++) {
+	  texvec[i*2] = (*vi).T().U();
+	  texvec[i*2+1] = (*vi).T().V();
+	  vi++;
+	}
+      }
+      
       if (clean) {
 	int dup = tri::Clean<MyMeshImport>::RemoveDuplicateVertex(m);
 	int dupface = tri::Clean<MyMeshImport>::RemoveDuplicateFace(m);
-	int unref =  tri::Clean<MyMeshImport>::RemoveUnreferencedVertex(m);
+	  int unref =  tri::Clean<MyMeshImport>::RemoveUnreferencedVertex(m);
 	vcg::tri::Allocator< MyMeshImport >::CompactVertexVector(m);
 	vcg::tri::Allocator< MyMeshImport >::CompactFaceVector(m);
 	if ((dup > 0 || unref > 0 || dupface > 0) && !silent)
 	  Rprintf("Removed %i duplicate %i unreferenced vertices and %i duplicate faces\n",dup,unref,dupface);
       }  
-      // do texture processing
-      bool tex = false;
-      std::vector<float> texvec;
-      std::vector<string> texfile;
+      //setup indices
+      SimpleTempData<MyMeshImport::VertContainer,int> indices(m.vert);
       // setup output structures
       NumericVector vb(3*m.vn);    
       std::vector<int> colvec;
@@ -156,18 +182,8 @@ RcppExport SEXP RallRead(SEXP filename_, SEXP updateNormals_, SEXP colorread_, S
 	  }
 	}
       }
-      if (m.textures.size() > 0 && colorread) {
-	if (!VertTex && WedgeTex) {
-	  m.vert.EnableTexCoord();	
-	  tri::AttributeSeam::SplitVertex(m, ExtractVertex, CompareVertex);
-	  texfile = m.textures;
-	  texvec.resize(2*m.vn);
-	}
-	for (int i=0;  i < m.vn; i++) {
-	  texvec[i*2] = (*vi).T().U();
-	  texvec[i*2+1] = (*vi).T().V();
-	}
-      }
+      
+     
     
       return List::create(Named("vb") = vb, 
 			  Named("it") = it,
