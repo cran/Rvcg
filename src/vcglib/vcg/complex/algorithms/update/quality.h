@@ -56,7 +56,6 @@ public:
   typedef typename MeshType::FacePointer    FacePointer;
   typedef typename MeshType::FaceIterator   FaceIterator;
 
-
 /** Assign to each vertex of the mesh a constant quality value. Useful for initialization.
 */
 static void VertexConstant(MeshType &m, float q)
@@ -68,7 +67,9 @@ static void VertexConstant(MeshType &m, float q)
 
 /** Clamp each vertex of the mesh with a range of values.
 */
-static void VertexClamp(MeshType &m, float qmin, float qmax)
+static void VertexClamp(MeshType &m,
+                        typename MeshType::VertexType::QualityType qmin,
+                        typename MeshType::VertexType::QualityType qmax)
 {
   tri::RequirePerVertexQuality(m);
   for(VertexIterator vi=m.vert.begin();vi!=m.vert.end();++vi) if(!(*vi).IsD())
@@ -140,6 +141,21 @@ static void VertexFromFace( MeshType &m, bool areaWeighted=true)
     {
       (*vi).Q() = TQ[*vi] / TCnt[*vi];
     }
+}
+
+template <class HandleScalar>
+static void VertexFromAttributeHandle(MeshType &m, typename MeshType::template PerVertexAttributeHandle<HandleScalar> &h)
+{
+  for(VertexIterator vi=m.vert.begin();vi!=m.vert.end();++vi)
+    if(!(*vi).IsD())
+      (*vi).Q()=ScalarType(h[vi]);
+}
+
+template <class HandleScalar>
+static void FaceFromAttributeHandle(MeshType &m, typename MeshType::template PerFaceAttributeHandle<HandleScalar> &h)
+{
+  for(FaceIterator fi=m.face.begin();fi!=m.face.end();++fi) if(!(*fi).IsD())
+    (*fi).Q() =h[fi];
 }
 
 static void FaceFromVertex( MeshType &m)

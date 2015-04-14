@@ -38,7 +38,7 @@ public:
 
     int n_attr;							// unique ID of the attribute
 
-    void Resize(const int & sz){((SimpleTempDataBase *)_handle)->Resize(sz);}
+    void Resize(size_t sz){((SimpleTempDataBase *)_handle)->Resize(sz);}
     void Reorder(std::vector<size_t> & newVertIndex){((SimpleTempDataBase *)_handle)->Reorder(newVertIndex);}
     bool operator<(const  PointerToAttribute    b) const {	return(_name.empty()&&b._name.empty())?(_handle < b._handle):( _name < b._name);}
 };
@@ -217,7 +217,7 @@ class TriMesh
     inline int HN() const { return hn; }
 
     /// Bounding box of the mesh
-    Box3<ScalarType> bbox;
+    Box3<typename TriMesh::VertexType::CoordType::ScalarType> bbox;
 
   /// Nomi di textures
     //
@@ -255,6 +255,7 @@ class TriMesh
         // access function
         template <class RefType>
         ATTR_TYPE & operator [](const RefType  & i){return (*_handle)[i];}
+        void resize(size_t /*size*/) { };
     };
 
     template <class ATTR_TYPE>
@@ -263,6 +264,7 @@ class TriMesh
         PerVertexAttributeHandle():AttributeHandle<ATTR_TYPE,VertContainer>(){}
                 PerVertexAttributeHandle( void *ah,const int & n):AttributeHandle<ATTR_TYPE,VertContainer>(ah,n){}
     };
+
 
     template <class ATTR_TYPE>
     class PerFaceAttributeHandle: public AttributeHandle<ATTR_TYPE,FaceContainer>{
@@ -294,6 +296,17 @@ class TriMesh
         ATTR_TYPE & operator ()(){ return *((Attribute<ATTR_TYPE> *)_handle)->attribute;}
     };
 
+    // Some common Handle typedefs to simplify use
+    typedef typename MeshType::template PerVertexAttributeHandle<ScalarType> PerVertexScalarHandle;
+    typedef typename MeshType::template PerVertexAttributeHandle<int>        PerVertexIntHandle;
+    typedef typename MeshType::template PerVertexAttributeHandle<bool>       PerVertexBoolHandle;
+    typedef typename MeshType::template PerVertexAttributeHandle<CoordType>  PerVertexCoordHandle;
+
+    typedef typename MeshType::template PerFaceAttributeHandle<ScalarType> PerFaceScalarHandle;
+    typedef typename MeshType::template PerFaceAttributeHandle<int>        PerFaceIntHandle;
+    typedef typename MeshType::template PerFaceAttributeHandle<bool>       PerFaceBoolHandle;
+    typedef typename MeshType::template PerFaceAttributeHandle<CoordType>  PerFaceCoordHandle;
+
 
     // the camera member (that should keep the intrinsics) is no more needed since 2006, when intrisncs moved into the Shot structure
     //Camera<ScalarType> camera; // intrinsic
@@ -311,24 +324,13 @@ public:
     /// Default constructor
     TriMesh()
     {
-    Clear();
+      Clear();
     }
 
     /// destructor
     ~TriMesh()
     {
-        typename std::set< PointerToAttribute>::iterator i;
-        for( i = vert_attr.begin(); i != vert_attr.end(); ++i)
-            delete ((SimpleTempDataBase*)(*i)._handle);
-        for( i = edge_attr.begin(); i != edge_attr.end(); ++i)
-            delete ((SimpleTempDataBase*)(*i)._handle);
-        for( i = face_attr.begin(); i != face_attr.end(); ++i)
-            delete ((SimpleTempDataBase*)(*i)._handle);
-        for( i = mesh_attr.begin(); i != mesh_attr.end(); ++i)
-            delete ((SimpleTempDataBase*)(*i)._handle);
-
-        FaceIterator fi;
-        for(fi = face.begin(); fi != face.end(); ++fi) (*fi).Dealloc();
+      Clear();
     }
 
      int Mem(const int & nv, const int & nf) const  {
@@ -352,38 +354,50 @@ public:
 
 
 
-/// Function to destroy the mesh
-void Clear()
-{
+  /// Function to destroy the mesh
+  void Clear()
+  {
+    typename std::set< PointerToAttribute>::iterator i;
+    for( i = vert_attr.begin(); i != vert_attr.end(); ++i)
+        delete ((SimpleTempDataBase*)(*i)._handle);
+    for( i = edge_attr.begin(); i != edge_attr.end(); ++i)
+        delete ((SimpleTempDataBase*)(*i)._handle);
+    for( i = face_attr.begin(); i != face_attr.end(); ++i)
+        delete ((SimpleTempDataBase*)(*i)._handle);
+    for( i = mesh_attr.begin(); i != mesh_attr.end(); ++i)
+        delete ((SimpleTempDataBase*)(*i)._handle);
+
+    for(FaceIterator fi = face.begin(); fi != face.end(); ++fi)
+      (*fi).Dealloc();
     vert.clear();
     face.clear();
     edge.clear();
-//	textures.clear();
-//	normalmaps.clear();
+//    textures.clear();
+//    normalmaps.clear();
     vn = 0;
     en = 0;
     fn = 0;
     hn = 0;
-  imark = 0;
-  attrn = 0;
-  C()=Color4b::Gray;
-}
+    imark = 0;
+    attrn = 0;
+    C()=Color4b::Gray;
+  }
 
-bool IsEmpty()
-{
-  return vert.empty() && edge.empty() && face.empty();
-}
+  bool IsEmpty() const
+  {
+    return vert.empty() && edge.empty() && face.empty();
+  }
 
-int & SimplexNumber(){ return fn;}
-int & VertexNumber(){ return vn;}
+  int & SimplexNumber(){ return fn;}
+  int & VertexNumber(){ return vn;}
 
-/// The incremental mark
-int imark;
+  /// The incremental mark
+  int imark;
 
 private:
     // TriMesh cannot be copied. Use Append (see vcg/complex/append.h)
   TriMesh operator =(const TriMesh &  /*m*/){assert(0);return TriMesh();}
-    TriMesh(const TriMesh & ){}
+  TriMesh(const TriMesh & ){}
 
 };	// end class Mesh
 

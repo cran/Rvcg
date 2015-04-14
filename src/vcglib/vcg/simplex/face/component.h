@@ -130,15 +130,15 @@ public:
 
   typedef int CurvatureDirType;
 
-  Point3f &PD1()       { static Point3f dummy(0,0,0); assert(0); return dummy;}
-  Point3f &PD2()       { static Point3f dummy(0,0,0); assert(0); return dummy;}
-  Point3f cPD1() const { static Point3f dummy(0,0,0); assert(0); return dummy;}
-  Point3f cPD2() const { static Point3f dummy(0,0,0); assert(0); return dummy;}
+  typename T::CoordType &PD1()       { static typename T::CoordType dummy(0,0,0); assert(0); return dummy;}
+  typename T::CoordType &PD2()       { static typename T::CoordType dummy(0,0,0); assert(0); return dummy;}
+  typename T::CoordType cPD1() const { static typename T::CoordType dummy(0,0,0); assert(0); return dummy;}
+  typename T::CoordType cPD2() const { static typename T::CoordType dummy(0,0,0); assert(0); return dummy;}
 
-  float &K1()      { static float dummy(0); assert(0); return dummy;}
-  float &K2()      { static float dummy(0); assert(0); return dummy;}
-  float cK1() const { static float dummy(0); assert(0); return dummy;}
-  float cK2() const { static float dummy(0); assert(0); return dummy;}
+  typename T::ScalarType &K1()      { static typename T::ScalarType dummy(0); assert(0); return dummy;}
+  typename T::ScalarType &K2()      { static typename T::ScalarType dummy(0); assert(0); return dummy;}
+  typename T::ScalarType cK1() const { static typename T::ScalarType dummy(0); assert(0); return dummy;}
+  typename T::ScalarType cK2() const { static typename T::ScalarType dummy(0); assert(0); return dummy;}
 
   static bool HasCurvatureDir()   { return false; }
 
@@ -206,12 +206,6 @@ public:
 private:
   typename T::VertexType *v[3];
 };
-
-template <class T>
-void ComputeNormal(T &f) {	f.N().Import(vcg::Normal<T>(f)); }
-
-template <class T>
-void ComputeNormalizedNormal(T &f) {	f.N().Import(vcg::NormalizedNormal<T>(f)); }
 
 template <class A, class T> class NormalAbs: public T {
 public:
@@ -483,8 +477,8 @@ private:
 /*-------------------------- Curvature Direction ----------------------------------*/
 template <class S>
 struct CurvatureDirBaseType{
-        typedef Point3<S> VecType;
-        typedef  S   ScalarType;
+        typedef Point3<S> CurVecType;
+        typedef  S   CurScalarType;
         CurvatureDirBaseType () {}
         Point3<S>max_dir,min_dir; // max and min curvature direction
         S k1,k2;// max and min curvature values
@@ -493,18 +487,18 @@ struct CurvatureDirBaseType{
 template <class A, class TT> class CurvatureDir: public TT {
 public:
   typedef A CurvatureDirType;
-  typedef typename CurvatureDirType::VecType VecType;
-  typedef typename CurvatureDirType::ScalarType ScalarType;
+  typedef typename CurvatureDirType::CurVecType CurVecType;
+  typedef typename CurvatureDirType::CurScalarType CurScalarType;
 
-  VecType &PD1()       { return _curv.max_dir;}
-  VecType &PD2()       { return _curv.min_dir;}
-  VecType cPD1() const { return _curv.max_dir;}
-  VecType cPD2() const { return _curv.min_dir;}
+  CurVecType &PD1()       { return _curv.max_dir;}
+  CurVecType &PD2()       { return _curv.min_dir;}
+  CurVecType cPD1() const { return _curv.max_dir;}
+  CurVecType cPD2() const { return _curv.min_dir;}
 
-  ScalarType &K1()       { return _curv.k1;}
-  ScalarType &K2()       { return _curv.k2;}
-  ScalarType cK1() const {return _curv.k1;}
-  ScalarType cK2() const {return _curv.k2;}
+  CurScalarType &K1()       { return _curv.k1;}
+  CurScalarType &K2()       { return _curv.k2;}
+  CurScalarType cK1() const {return _curv.k1;}
+  CurScalarType cK2() const {return _curv.k2;}
   template < class RightValueType>
   void ImportData(const RightValueType  & rightF ) {
     if(rightF.IsCurvatureDirEnabled()) {

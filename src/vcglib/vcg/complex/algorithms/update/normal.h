@@ -66,7 +66,7 @@ typedef typename MeshType::FaceIterator   FaceIterator;
  */
 static void PerVertexClear(ComputeMeshType &m, bool ClearAllVertNormal=false)
 {
-  if(!HasPerVertexNormal(m)) throw vcg::MissingComponentException("PerVertexNormal");
+  RequirePerVertexNormal(m);
   if(ClearAllVertNormal)
     UpdateFlags<ComputeMeshType>::VertexClearV(m);
   else
@@ -86,20 +86,27 @@ static void PerVertexClear(ComputeMeshType &m, bool ClearAllVertNormal=false)
 /**
  The normal of a vertex v is the classical area-weigthed average of the normals of the faces incident on v.
  */
- static void PerVertex(ComputeMeshType &m)
+static void PerVertex(ComputeMeshType &m)
 {
  PerVertexClear(m);
- FaceIterator f;
- for(f=m.face.begin();f!=m.face.end();++f)
+ for(FaceIterator f=m.face.begin();f!=m.face.end();++f)
    if( !(*f).IsD() && (*f).IsR() )
    {
-    //typename FaceType::NormalType t = (*f).Normal();
-    typename FaceType::NormalType t = vcg::Normal(*f);
+    typename FaceType::NormalType t = vcg::TriangleNormal(*f);
 
-    for(int j=0; j<3; ++j)
+    for(int j=0; j<(*f).VN(); ++j)
      if( !(*f).V(j)->IsD() && (*f).V(j)->IsRW() )
       (*f).V(j)->N() += t;
    }
+}
+
+static void PerFacePolygonal(ComputeMeshType &m)
+{
+for(FaceIterator fi=m.face.begin();fi!=m.face.end();++fi)
+{
+  if( !(*fi).IsD() )
+    fi->N() = PolygonNormal(*fi).Normalize();
+}
 }
 
 ///  \brief Calculates the vertex normal as an angle weighted average. It does not need or exploit current face normals.
@@ -118,7 +125,7 @@ Journal of Graphics Tools, 1998
   for(f=m.face.begin();f!=m.face.end();++f)
    if( !(*f).IsD() && (*f).IsR() )
    {
-    typename FaceType::NormalType t = vcg::NormalizedNormal(*f);
+        NormalType t = TriangleNormal(*f).Normalize();
         NormalType e0 = ((*f).V1(0)->cP()-(*f).V0(0)->cP()).Normalize();
         NormalType e1 = ((*f).V1(1)->cP()-(*f).V0(1)->cP()).Normalize();
         NormalType e2 = ((*f).V1(2)->cP()-(*f).V0(2)->cP()).Normalize();
@@ -144,7 +151,7 @@ static void PerVertexNelsonMaxWeighted(ComputeMeshType &m)
  for(f=m.face.begin();f!=m.face.end();++f)
    if( !(*f).IsD() && (*f).IsR() )
    {
-    typename FaceType::NormalType t = vcg::Normal(*f);
+    typename FaceType::NormalType t = TriangleNormal(*f);
         ScalarType e0 = SquaredDistance((*f).V0(0)->cP(),(*f).V1(0)->cP());
         ScalarType e1 = SquaredDistance((*f).V0(1)->cP(),(*f).V1(1)->cP());
         ScalarType e2 = SquaredDistance((*f).V0(2)->cP(),(*f).V1(2)->cP());
@@ -160,10 +167,10 @@ static void PerVertexNelsonMaxWeighted(ComputeMeshType &m)
 /// Not normalized. Use PerFaceNormalized() or call NormalizePerVertex() if you need unit length per face normals.
 static void PerFace(ComputeMeshType &m)
 {
-  if(!HasPerFaceNormal(m)) throw vcg::MissingComponentException("PerFaceNormal");
+  RequirePerFaceNormal(m);
   for(FaceIterator f=m.face.begin();f!=m.face.end();++f)
-            if( !(*f).IsD() )
-                face::ComputeNormal(*f);
+    if( !(*f).IsD() )
+              f->N() = TriangleNormal(*f).Normalize();
 }
 
 
@@ -262,7 +269,7 @@ static void PerVertexNormalized(ComputeMeshType &m)
   NormalizePerVertex(m);
 }
 
-/// \brief Equivalent to PerFace() and NormalizePerVertex()
+/// \brief Equivalent to PerFace() and NormalizePerFace()
 static void PerFaceNormalized(ComputeMeshType &m)
 {
   PerFace(m);
@@ -398,10 +405,10 @@ static void PerWedgeCrease(ComputeMeshType &m, ScalarType angleRad)
 
   for(FaceIterator fi=m.face.begin();fi!=m.face.end();++fi)		 if(!(*fi).IsD())
   {
-    NormalType nn= vcg::Normal(*fi);
+    NormalType nn= TriangleNormal(*fi);
     for(int i=0;i<3;++i)
     {
-      const NormalType &na=vcg::Normal(*(*fi).FFp(i));
+      const NormalType &na=TriangleNormal(*(*fi).FFp(i));
       if(nn*na > cosangle )
       {
         fi->WN((i+0)%3) +=na;
@@ -425,7 +432,7 @@ static void PerFaceRW(ComputeMeshType &m, bool normalize=false)
         {
             for(int j=0; j<3; ++j)
                 if( !(*f).V(j)->IsR()) 	cn = false;
-      if( cn ) face::ComputeNormalizedNormal(*f);
+      if( cn )     f->N() = TriangleNormal(*f).Normalize();
             cn = true;
         }
     }
@@ -438,7 +445,7 @@ static void PerFaceRW(ComputeMeshType &m, bool normalize=false)
                     if( !(*f).V(j)->IsR()) 	cn = false;
 
                 if( cn )
-                    (*f).ComputeNormal();
+                  f->N() = TriangleNormal(*f).Normalize();
                 cn = true;
             }
     }

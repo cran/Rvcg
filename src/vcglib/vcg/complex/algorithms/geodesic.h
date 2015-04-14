@@ -72,7 +72,7 @@ public:
     float qrange = qmax-qmin;
     std::pair<float,float> minmax = Stat<MeshType>::ComputePerVertexQualityMinMax(m);
     float range = minmax.second-minmax.first;
-    for(int i=0;i<m.vert.size();++i)
+    for(size_t i=0;i<m.vert.size();++i)
       wH[i]=qmin+((m.vert[i].Q()-minmax.first)/range)*qrange;
 
 //    qDebug("Range %f %f %f",minmax.first,minmax.second,range);
@@ -92,8 +92,8 @@ struct BasicCrossFunctor
   BasicCrossFunctor(MeshType &m) { tri::RequirePerVertexCurvatureDir(m); }
   typedef typename MeshType::VertexType VertexType;
 
-  Point3f D1(VertexType &v) { return v.PD1(); }
-  Point3f D2(VertexType &v) { return v.PD1(); }
+  typename MeshType::CoordType D1(VertexType &v) { return v.PD1(); }
+  typename MeshType::CoordType D2(VertexType &v) { return v.PD2(); }
 };
 
 /**
@@ -108,14 +108,15 @@ template <class MeshType>
 class AnisotropicDistance{
   typedef typename MeshType::VertexType VertexType;
   typedef typename MeshType::ScalarType  ScalarType;
+  typedef typename MeshType::CoordType  CoordType;
   typedef typename MeshType::VertexIterator VertexIterator;
 
-  typename MeshType::template PerVertexAttributeHandle<Point3f> wxH,wyH;
+  typename MeshType::template PerVertexAttributeHandle<CoordType> wxH,wyH;
 public:
   template <class CrossFunctor > AnisotropicDistance(MeshType &m, CrossFunctor &cf)
   {
-    wxH = tri::Allocator<MeshType>:: template GetPerVertexAttribute<Point3f> (m,"distDirX");
-    wyH = tri::Allocator<MeshType>:: template GetPerVertexAttribute<Point3f> (m,"distDirY");
+    wxH = tri::Allocator<MeshType>:: template GetPerVertexAttribute<CoordType> (m,"distDirX");
+    wyH = tri::Allocator<MeshType>:: template GetPerVertexAttribute<CoordType> (m,"distDirY");
 
     for(VertexIterator vi=m.vert.begin();vi!=m.vert.end();++vi)
     {
@@ -126,7 +127,7 @@ public:
 
   ScalarType operator()( VertexType * v0,  VertexType * v1)
   {
-    Point3f dd = v0->cP()-v1->cP();
+    CoordType dd = v0->cP()-v1->cP();
     float x = (fabs(dd * wxH[v0])+fabs(dd *wxH[v1]))/2.0f;
     float y = (fabs(dd * wyH[v0])+fabs(dd *wyH[v1]))/2.0f;
 
@@ -307,8 +308,9 @@ wrapping function.
     VertexPointer farthest=0;
 //    int t0=clock();
     //Requirements
-    if(!HasVFAdjacency(m)) throw vcg::MissingComponentException("VFAdjacency");
-    if(!HasPerVertexQuality(m)) throw vcg::MissingComponentException("VertexQuality");
+    tri::RequireVEAdjacency(m);
+    tri::RequirePerVertexQuality(m);
+
     assert(!seedVec.empty());
 
     TempDataType TD(m.vert, std::numeric_limits<ScalarType>::max());
