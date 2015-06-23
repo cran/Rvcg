@@ -125,6 +125,8 @@ Initial commit
 #include <vcg/math/matrix44.h>
 #include <vcg/math/matrix33.h>
 
+#include <algorithm>
+
 namespace vcg {
 /** \addtogroup space */
 /*@{*/
@@ -479,8 +481,8 @@ ScalarType ComputeAspectRatio()
 
 		a=Barycentric.V(0);
 		b=Barycentric.V(1);
-		c=Barycentric.V(2);
-		d=1-(a+b+c);
+		d=Barycentric.V(2);
+		c=1-(a+b+d);
 
 	}
 

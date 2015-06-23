@@ -50,23 +50,19 @@ public:
         int numF;
         std::vector<ScalarType > BarycentricW;
         CoordType TargetPos;
-        ScalarType facePenalty;
 
         FaceConstraint()
         {
             numF=-1;
-            facePenalty=ScalarType(PENALTY);
         }
 
         FaceConstraint(int _numF,
                        const std::vector<ScalarType > &_BarycentricW,
-                       const CoordType &_TargetPos,
-                       const ScalarType fPenalty = ScalarType(PENALTY))
+                       const CoordType &_TargetPos)
         {
             numF=_numF;
             BarycentricW= std::vector<ScalarType > (_BarycentricW.begin(),_BarycentricW.end());
             TargetPos=_TargetPos;
-            facePenalty=fPenalty;
         }
     };
 
@@ -81,6 +77,8 @@ public:
         bool fixBorder;
         //this bool is used to set if cotangent weight is used, this flag to false means uniform laplacian
         bool useCotWeight;
+        //use this weight for the laplacian when the cotangent one is not used
+        ScalarType lapWeight;
         //the set of fixed vertices
         std::vector<int> FixedV;
         //the set of faces for barycentric constraints
@@ -95,6 +93,7 @@ public:
             useMassMatrix=true;
             fixBorder=false;
             useCotWeight=false;
+            lapWeight=1;
         }
     };
 
@@ -182,7 +181,8 @@ private:
             assert(FaceN>=0);
             assert(FaceN<(int)mesh.face.size());
             assert(mesh.face[FaceN].VN()==(int)SParam.ConstrainedF[i].BarycentricW.size());
-            penalty=SParam.ConstrainedF[i].facePenalty;
+            penalty=ScalarType(1) - SParam.lapWeight;
+            assert(penalty>ScalarType(0) && penalty<ScalarType(1));
 
             //then add all the weights to impose the constraint
             for (int j=0;j<mesh.face[FaceN].VN();j++)
@@ -277,7 +277,7 @@ public:
         //get the entries for laplacian matrix
         std::vector<std::pair<int,int> > IndexL;
         std::vector<ScalarType> ValuesL;
-        MeshToMatrix<MeshType>::GetLaplacianMatrix(mesh,IndexL,ValuesL,SParam.useCotWeight);
+        MeshToMatrix<MeshType>::GetLaplacianMatrix(mesh,IndexL,ValuesL,SParam.useCotWeight,SParam.lapWeight);
 
         //initialize sparse laplacian matrix
         InitSparse(IndexL,ValuesL,matr_size*3,matr_size*3,L);
