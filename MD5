@@ -1,7 +1,7 @@
-3e58e8be943cbe0a2d2b965442ebf027 *DESCRIPTION
+f3edb9e12734ca5745d84908a3b39f48 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 a4d394081fb27bf9618fa61307401973 *NAMESPACE
-cf3ad83318d87aa6296b3e10ac022efb *R/Rvcg-package.R
+0a6840e4232fe13c4d9735bc25e5165c *R/Rvcg-package.R
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 2257a4c56d66071b5a19ebc153c4fb8b *R/onUnload.r
 dfce86148da7ec5eef9cea0b75801345 *R/vcgBary.r
@@ -34,7 +34,7 @@ ac017cc73f73937437dc6ed3a45df34a *data/dummyhead.rda
 5289d94947630da4e6294cea4106edfa *data/humface.rda
 30ba994d4ad29ff4edcbe6156645633a *inst/COPYRIGHTS
 b5df06b3cdef2829a1ca10ed0739cbb2 *inst/NEWS.Rd
-ec23d60823ecd2a02a1df6fbdb94d7e7 *man/Rvcg-package.Rd
+e9914d433d2d24094242feb88d17487e *man/Rvcg-package.Rd
 9878875dca93652927c30a3a5f176cdf *man/dummyhead.Rd
 db8ef0d5ebda4e209bc14ab608d6fb21 *man/humface.Rd
 c526a19f49ca05d08fc617c823cb4738 *man/meshintegrity.Rd
@@ -77,7 +77,7 @@ bed6da80b85ad167a36904523e2832d8 *src/RgetEdge.cpp
 39181be4cdadf6e6353cd4961ce32747 *src/Rintersect.cpp
 07952faea7c1e4d32c5af317a031fa19 *src/Risolated.cpp
 46d7b32fba0b0b637972d1537647f7a2 *src/Rkdtree.cpp
-1b61eaf7e2585732fd77efc9c4062433 *src/Rmarch.cpp
+2db51e4152db919049a4aae6707042a4 *src/Rmarch.cpp
 4df2554ca4654038418fc4714d10c931 *src/Rmeshres.cpp
 76e38251090a622273da649b71f082df *src/Rsample.cpp
 20ae1af62b719565d04aebf0d3b9d1ae *src/Rsmooth.cpp
