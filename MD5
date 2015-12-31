@@ -1,7 +1,7 @@
-04458c15ecfbd0a33313b8008a8194dc *DESCRIPTION
+7b03c518c534f84dac714f2a81934cb3 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 ff5e03b3fc241305a23dadf5b1daf9c9 *NAMESPACE
-f2b29653ea6e08a689152a0158a34be5 *R/Rvcg-package.R
+89e3d2b45952a4f5e5ded2e3c50b9bb7 *R/Rvcg-package.R
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 5d67cda19b16900856a032373f8e3552 *R/normorient.r
 2257a4c56d66071b5a19ebc153c4fb8b *R/onUnload.r
@@ -35,8 +35,8 @@ bb8c1972ee5f14b8c3c55d0dac674591 *configure.win
 ac017cc73f73937437dc6ed3a45df34a *data/dummyhead.rda
 5289d94947630da4e6294cea4106edfa *data/humface.rda
 30ba994d4ad29ff4edcbe6156645633a *inst/COPYRIGHTS
-a66c16ad4e536a17dbd6ac548a15955b *inst/NEWS.Rd
-4cc9faeb7998e4e093e095058734fa6f *man/Rvcg-package.Rd
+48ab01d0733c40be1414033b9553e754 *inst/NEWS.Rd
+3f912fb950eb6f585759debc5be6c805 *man/Rvcg-package.Rd
 97158570b1b7829ec67e9bb4e74b6f75 *man/dummyhead.Rd
 d9be08c61c5f7da5af3dc312549a30b7 *man/humface.Rd
 1f625ee48bf1256414cbc91a63b6be5a *man/meshintegrity.Rd
@@ -194,7 +194,7 @@ ff2d20f8bb479f2de20066f51dc4ea6f *src/vcglib/vcg/complex/append.h
 fcafddc8fbdbd73cdef23b215cf0bd3c *src/vcglib/vcg/container/entries_allocation_table.h
 f8f4be531729057dd7ae0d5c32cd5e01 *src/vcglib/vcg/container/simple_temporary_data.h
 1a4792e3ecd826bd3519d72e873992a9 *src/vcglib/vcg/container/vector_occ.h
-56ab8629933ace6e375023ce17b8c85e *src/vcglib/vcg/math/base.h
+e296edc6f801a2a42849d57d040fc347 *src/vcglib/vcg/math/base.h
 32341319bc398cc7396d3322609bd3f5 *src/vcglib/vcg/math/camera.h
 647b6198ad214b4146c8c2eb6e9a1766 *src/vcglib/vcg/math/disjoint_set.h
 87af465ba7a73d859380d848de5dac9d *src/vcglib/vcg/math/eigen.h
