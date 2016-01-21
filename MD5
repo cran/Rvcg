@@ -1,7 +1,7 @@
-7b03c518c534f84dac714f2a81934cb3 *DESCRIPTION
+27257fe3713273c95c6db7df3cd2e91c *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 ff5e03b3fc241305a23dadf5b1daf9c9 *NAMESPACE
-89e3d2b45952a4f5e5ded2e3c50b9bb7 *R/Rvcg-package.R
+4ee3daba8b2fcaf55ceb8b1d8bf882ed *R/Rvcg-package.R
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 5d67cda19b16900856a032373f8e3552 *R/normorient.r
 2257a4c56d66071b5a19ebc153c4fb8b *R/onUnload.r
@@ -35,8 +35,8 @@ bb8c1972ee5f14b8c3c55d0dac674591 *configure.win
 ac017cc73f73937437dc6ed3a45df34a *data/dummyhead.rda
 5289d94947630da4e6294cea4106edfa *data/humface.rda
 30ba994d4ad29ff4edcbe6156645633a *inst/COPYRIGHTS
-48ab01d0733c40be1414033b9553e754 *inst/NEWS.Rd
-3f912fb950eb6f585759debc5be6c805 *man/Rvcg-package.Rd
+766914a09aa5d281b6a57d99c420e3c5 *inst/NEWS.Rd
+484f8e29f8e8d1a1c656dd05f67d59f6 *man/Rvcg-package.Rd
 97158570b1b7829ec67e9bb4e74b6f75 *man/dummyhead.Rd
 d9be08c61c5f7da5af3dc312549a30b7 *man/humface.Rd
 1f625ee48bf1256414cbc91a63b6be5a *man/meshintegrity.Rd
@@ -79,7 +79,7 @@ c76eb0e23022d909f5bed764e9932a7c *src/Rclost.cpp
 bed6da80b85ad167a36904523e2832d8 *src/RgetEdge.cpp
 bb4ac07d213c11525952c3bdd86c0b7a *src/Rintersect.cpp
 07952faea7c1e4d32c5af317a031fa19 *src/Risolated.cpp
-c9a7969d24478a115800697293941d3f *src/Rkdtree.cpp
+562fd6f1219cb23baac371f0ea0c1597 *src/Rkdtree.cpp
 2db51e4152db919049a4aae6707042a4 *src/Rmarch.cpp
 4df2554ca4654038418fc4714d10c931 *src/Rmeshres.cpp
 66b0e424c338c1c5e568801481bf819f *src/Rplatonic.cpp
@@ -88,7 +88,7 @@ c3048ad092e4b7bf154cc8d873c7b52a *src/Rsmooth.cpp
 7bbe19b03d44b898d3ce40aeb90dc577 *src/Runiform_resample.cpp
 d9f2f06663e174ea1364a9d86ffd8da1 *src/RupdateNormals.cpp
 15b34edb37901e67cb9f7600226570ba *src/RvcgIO.h
-21edef3b65ea099bf15eb5a23380760a *src/RvcgKD.h
+c722c6b148e3ee29f2960e04f5ab84d3 *src/RvcgKD.h
 f5786c83daab8a1d60edb2ecce59689e *src/Volume.h
 57848ff712d9c0232afefc093eced1d6 *src/checkListNames.cpp
 6ebc29178bbf238c50a4959ef8cbd9ce *src/checkListNames.h
