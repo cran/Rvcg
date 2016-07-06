@@ -23,6 +23,8 @@
 #ifndef __VCG_TRIVIAL_WALKER
 #define __VCG_TRIVIAL_WALKER
 
+#include<vcg/space/index/grid_util.h>
+
 namespace vcg {
 
 // Very simple volume class.
@@ -124,16 +126,18 @@ public:
   vcg::Point3<ScalarType> &N()  { static Point3<ScalarType> _p(0,0,0); return _p;}
 };
 
+template <class _ScalarType=float>
 class SimpleVoxelWithNormal
 {
 private:
-  float _v;
-  vcg::Point3f _n;
+  _ScalarType _v;
+  vcg::Point3<_ScalarType> _n;
 public:
-  float &V() {return _v;}
-  float V() const {return _v;}
-  vcg::Point3f &N() {return _n;}
-  vcg::Point3f N() const {return _n;}
+  typedef _ScalarType ScalarType;
+  ScalarType &V() {return _v;}
+  ScalarType V() const {return _v;}
+  vcg::Point3<ScalarType> &N() {return _n;}
+  vcg::Point3<ScalarType> N() const {return _n;}
   static bool HasNormal() {return true;}
 
 };

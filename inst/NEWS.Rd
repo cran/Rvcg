@@ -2,6 +2,37 @@
 \title{News for Package Rvcg}
 \newcommand{\cpkg}{\href{http://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in Rvcg version 0.14 (2016-07-06)}{
+  \subsection{new features}{
+    \itemize{
+      \item added vcgBallPivoting: ball pivoting surface reconstruction
+      \item added vcgKmeans a fast kmeans clustering for 2D and 3D point clouds
+      \item added vcgClostOnKDtreeFromBarycenters, vcgCreateKDtree,
+  vcgCreateKDtreeFromBarycenters, vcgSearchKDtree to allow reusing KD-trees
+      \item added vcgSubdivide to refine an existing mesh by subidviding faces
+      \item added vcgMetro to compare differences between two meshes
+  using different types of subsampling (thanks to F. Girinion)
+      \item added vcgArea to calculate the surface area of a mesh
+      \item added option keep to vcgIsolated and allowed options diameter/facenum to be used with split=T
+      \item updated vcglib to revision 5735
+      \item added Rvcg::IOMesh::mesh3d2Rvcg<T>, allowing easier
+      conversion from mesh3d to vcglib meshtypes
+      \item added checkFaceOrientation to check whether a the outer
+  layer of a surface mesh points outward
+      }
+  }
+  
+  \subsection{bug fixes}{
+    \itemize{
+      \item vcgClost: in case distances are beyond threshold, distance values are
+      to NaN and a  warning is issued
+      \item refactored and simplified C++ code
+
+      
+      }
+  }
+}
+
 \section{Changes in Rvcg version 0.13.1.2 (2016-01-22)}{
   \subsection{bug fixes}{
     \itemize{
@@ -26,6 +57,7 @@
       }
   }
 }
+
   
 \section{Changes in Rvcg version 0.13.0 (2015-12-15)}{
   \subsection{new features}{

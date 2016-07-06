@@ -6,8 +6,8 @@
 #' \tabular{ll}{
 #' Package: \tab Rvcg\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.13.1.2\cr
-#' Date: \tab 2016-01-21\cr
+#' Version: \tab 0.14\cr
+#' Date: \tab 2016-07-05\cr
 #' License: \tab GPL\cr
 #' LazyLoad: \tab yes\cr }
 #' 
@@ -53,3 +53,20 @@ NULL
 #' @keywords datasets
 #' 
 NULL
+
+
+#' document deprecated functions
+#'
+#' @title deprecated functions of Rvcg
+#' @name deprecated
+#' @rdname Rvcg-deprecated
+#' @keywords internal
+NULL
+
+#' @rdname Rvcg-deprecated
+#' @export 
+checkNormOrient <- function (...)
+{
+  .Deprecated("checkFaceOrientation", package="Rvcg")
+  checkFaceOrientation(...)
+}

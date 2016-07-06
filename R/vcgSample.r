@@ -7,6 +7,8 @@
 #' @param MCsamp integer: MonteCarlo sample iterations used in PoissonDisk sampling.
 #' @param geodes logical: maximise geodesic distance between sample points (only for Poisson Disk sampling)
 #' @param strict logical: if \code{type="pd"} and the amount of coordinates exceeds \code{SampleNum},  the resulting coordinates will be subsampled again by kmean clustering to reach the requested number.
+#' @param iter.max integer: maximum iterations to use in k-means clustering.
+#' @param threads integer number of threads to use for k-means clustering
 #' @details Poisson disk subsampling will not generate the exact amount of coordinates specified in \code{SampleNum}, depending on \code{MCsamp} the result will contain more or less coordinates.
 #' @return sampled points
 #' @examples
@@ -18,7 +20,7 @@
 #' points3d(ss)
 #' }
 #' @export vcgSample
-vcgSample <- function(mesh, SampleNum=100,type=c("km","pd","mc"),MCsamp=20,geodes=TRUE,strict=FALSE)
+vcgSample <- function(mesh, SampleNum=100,type=c("km","pd","mc"),MCsamp=20,geodes=TRUE,strict=FALSE,iter.max=100,threads=0)
     {
         if (!inherits(mesh,"mesh3d"))
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
@@ -37,24 +39,17 @@ vcgSample <- function(mesh, SampleNum=100,type=c("km","pd","mc"),MCsamp=20,geode
         }
         if (type %in% 1:2) {
             mesh <- meshintegrity(mesh)
-            vb <- mesh$vb[1:3,,drop=FALSE]
-            it <- mesh$it - 1
-            storage.mode(it) <- "integer"
-            dimit <- dim(it)[2]
-            dimvb <- dim(vb)[2]
             type <- as.integer(type)
-            SampleNum <- as.integer(SampleNum)
-            MCsamp <- as.integer(MCsamp)
-            if (!is.logical(geodes) || (FALSE %in% is.integer(c(it,type, MCsamp, SampleNum))) || (FALSE %in% is.numeric(vb)))
-                stop("Please provide sensible arguments!")
-            tmp <- .Call("Rsample", vb, it, SampleNum, type, MCsamp, geodes)
+            tmp <- .Call("Rsample", mesh, SampleNum, type, MCsamp, geodes)
             tmp <- t(tmp)
-            if (strict && nrow(tmp) > SampleNum)
-                tmp <- kmeans(tmp,centers=SampleNum, iter.max=100)$centers
+            if (strict && nrow(tmp) > SampleNum) {
+                tmp <- vcgKmeans(tmp,k=SampleNum, iter.max=iter.max,threads=threads)$centers
+                t(vcgClostKD(tmp, mesh,sign=FALSE,threads = threads)$vb[1:3,])
+            }
         } else {
-            tmp <- kmeans(t(mesh$vb[1:3,]),centers=SampleNum, iter.max=100)$centers
+            tmp <-  vcgKmeans(mesh,k=SampleNum, iter.max=iter.max,threads=threads)$centers
             if (!noit)
-                tmp <- t(vcgClost(tmp, mesh)$vb[1:3,])
+                tmp <- t(vcgClostKD(tmp, mesh,sign=FALSE,threads=threads)$vb[1:3,])
         }
         return(tmp)
     }

@@ -12,7 +12,7 @@
 #' points are returned.
 #' @param smoothNormals logical: if TRUE, laplacian smoothed normals are used.
 #' @param borderchk logical: request checking if the hit face is at the border of the mesh.
-#' @param tol maximum distance to search. If distance is beyond that, the original point will be kept and the distance set to 1e12.
+#' @param tol maximum distance to search. If distance is beyond that, the original point will be kept and the distance set to NaN. If tol = 0, tol is set to 2*diagonal of the bounding box of \code{mesh}.
 #' @param facenormals logical: if TRUE only the facenormal of the face the closest point has hit is returned, the weighted average of the surrounding vertex normals otherwise.
 #' @param ... additional parameters, currently unused.
 #' @return returns an object of class "mesh3d" with:
@@ -48,11 +48,7 @@ vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, bo
         if (!inherits(mesh,"mesh3d"))
             stop("argument 'mesh' needs to be object of class 'mesh3d'")
         mesh <- meshintegrity(mesh,facecheck=TRUE)
-        vb <- mesh$vb[1:3,,drop=FALSE]
-        it <- mesh$it - 1
-        dimit <- dim(it)[2]
-        dimvb <- dim(vb)[2]
-        
+                
         if (is.matrix(x)) {
             clost <- t(x[,1:3,drop=FALSE])
             x <- list()
@@ -69,19 +65,15 @@ vcgClost <- function(x,mesh,sign=TRUE,barycentric=FALSE, smoothNormals=FALSE, bo
             stop("please provide sensible input")
         
         storage.mode(clost) <- "double"
-        tmp <- .Call("Rclost",vb, it, clost,sign,borderchk,barycentric,smoothNormals,tol,facenormals)
-        x$vb <- rbind(tmp$ioclost,1)
-        x$normals <- rbind(tmp$normals,1)
-        chcknorm <- which(is.nan(x$normals))
-        if (length(chcknorm) > 0)
-            x$normals[chcknorm] <- 0
+        outmesh <- .Call("Rclost",mesh, clost,sign,borderchk,barycentric,smoothNormals,tol,facenormals)
         
-        x$quality <- tmp$distance
-        if (borderchk)
-            x$border <- tmp$border
-        if(barycentric)
-            x$barycoords <- tmp$barycoord
-        x$faceptr <- tmp$faceptr+1
-        invisible(x)
+        chcknorm <- which(is.nan(outmesh$normals))
+        if (length(chcknorm) > 0)
+            outmesh$normals[chcknorm] <- 0
+        outmesh$it <- x$it
+        nancheck <- which(is.nan(outmesh$quality))
+        if (length(nancheck))
+            warning("some points where beyond the search tolerance")
+        invisible(outmesh)
     }
 

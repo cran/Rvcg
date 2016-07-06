@@ -31,11 +31,7 @@
 #include <vector>
 #include <limits>
 #include <iostream>
-#ifdef HAVE_CXX11
 #include <cstdint>
-#else
-#include <stdint.h>
-#endif
 
 namespace vcg {
 
@@ -161,7 +157,7 @@ namespace vcg {
         // compute the AABB of the input
         mPoints[0] = points[0];
         mAABB.Set(mPoints[0]);
-		for (unsigned int i=1 ; i<mPoints.size() ; ++i)
+    for (unsigned int i=1 ; i<mPoints.size() ; ++i)
         {
             mPoints[i] = points[i];
             mIndices[i] = i;
@@ -169,10 +165,11 @@ namespace vcg {
         }
 
         mNodes.reserve(4*mPoints.size()/nofPointsPerCell);
-		//first node inserted (no leaf). The others are made by the createTree function (recursively)
+    //first node inserted (no leaf). The others are made by the createTree function (recursively)
         mNodes.resize(1);
         mNodes.back().NodeU.mynode.leaf = 0;
-        int numLevel = createTree(0, 0, mPoints.size(), 1, nofPointsPerCell, maxDepth);
+        /*int numLevel = */
+        createTree(0, 0, mPoints.size(), 1, nofPointsPerCell, maxDepth);
     }
 
     template<typename Scalar>
@@ -202,8 +199,7 @@ namespace vcg {
     {
         mNeighborQueue.setMaxSize(k);
         mNeighborQueue.init();
-        mNeighborQueue.insert(0xffffffff, std::numeric_limits<Scalar>::max());
-
+				
         QueryNode mNodeStack[64];
         mNodeStack[0].nodeId = 0;
         mNodeStack[0].sq = 0.f;
@@ -220,15 +216,15 @@ namespace vcg {
             Node& node = mNodes[qnode.nodeId];
 
             //if the distance is less than the top of the max-heap, it could be one of the k-nearest neighbours
-            if (qnode.sq < mNeighborQueue.getTopWeight())
-            {
-                //when we arrive to a lef
+						if (mNeighborQueue.getNofElements() < k || qnode.sq < mNeighborQueue.getTopWeight())
+						{
+                //when we arrive to a leaf
                 if (node.NodeU.mynode.leaf)
                 {
                     --count; //pop of the leaf
 
                     //end is the index of the last element of the leaf in mPoints
-		    unsigned int end = node.NodeU.myleaf.start+node.NodeU.myleaf.size;
+                    unsigned int end = node.NodeU.myleaf.start+node.NodeU.myleaf.size;
                     //adding the element of the leaf to the heap
                     for (unsigned int i=node.NodeU.myleaf.start ; i<end ; ++i)
                         mNeighborQueue.insert(mIndices[i], vcg::SquaredNorm(queryPoint - mPoints[i]));
@@ -244,12 +240,12 @@ namespace vcg {
                     {
                         mNodeStack[count].nodeId  = node.NodeU.mynode.firstChildId;
                         //in the father's nodeId we save the index of the other sub-tree (for backtracking)
-                        qnode.nodeId = node.NodeU.mynode.firstChildId+1;
+			qnode.nodeId = node.NodeU.mynode.firstChildId+1;
                     }
                     //right sub-tree (same as above)
                     else
                     {
-                        mNodeStack[count].nodeId  = node.NodeU.mynode.firstChildId+1;
+		        mNodeStack[count].nodeId  = node.NodeU.mynode.firstChildId+1;
                         qnode.nodeId = node.NodeU.mynode.firstChildId;
                     }
                     //distance is inherited from the father (while descending the tree it's equal to 0)
@@ -289,7 +285,7 @@ namespace vcg {
 
             if (qnode.sq < sqrareDist)
             {
-                if (node.leaf)
+                if (node.NodeU.mynode.leaf)
                 {
                     --count; // pop
                     unsigned int end = node.start+node.size;
@@ -466,25 +462,25 @@ namespace vcg {
         node.NodeU.mynode.dim = dim;
         //we divide the bounding box in 2 partitions, considering the average of the "dim" dimension
         node.NodeU.mynode.splitValue = Scalar(0.5*(aabb.max[dim] + aabb.min[dim]));
-	
+
         //midId is the index of the first element in the second partition
-        unsigned int midId = split(start, end, dim,node.NodeU.mynode.splitValue);
+        unsigned int midId = split(start, end, dim, node.NodeU.mynode.splitValue);
 
 
         node.NodeU.mynode.firstChildId = mNodes.size();
         mNodes.resize(mNodes.size()+2);
-		int leftLevel, rightLevel;
+    int leftLevel, rightLevel;
 
         {
             // left child
-            unsigned int childId = mNodes[nodeId].NodeU.mynode.firstChildId;;
+            unsigned int childId = mNodes[nodeId].NodeU.mynode.firstChildId;
             Node& child = mNodes[childId];
             if (midId - start <= targetCellSize || level>=targetMaxDepth)
             {
                 child.NodeU.mynode.leaf = 1;
-		child.NodeU.myleaf.start = start;
+                child.NodeU.myleaf.start = start;
                 child.NodeU.myleaf.size = midId - start;
-				leftLevel = level;
+        leftLevel = level;
             }
             else
             {
@@ -502,17 +498,17 @@ namespace vcg {
                 child.NodeU.mynode.leaf = 1;
                 child.NodeU.myleaf.start = midId;
                 child.NodeU.myleaf.size = end - midId;
-				rightLevel = level;
+        rightLevel = level;
             }
             else
             {
-                child.NodeU.mynode.leaf = 0;
+	        child.NodeU.mynode.leaf = 0;
                 rightLevel = createTree(childId, midId, end, level+1, targetCellSize, targetMaxDepth);
             }
         }
-		if (leftLevel > rightLevel)
-			return leftLevel;
-		return rightLevel;
+    if (leftLevel > rightLevel)
+      return leftLevel;
+    return rightLevel;
     }
 }
 
