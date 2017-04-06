@@ -1,8 +1,8 @@
 Package: Rvcg
 Type: Package
 Title: Manipulations of Triangular Meshes Based on the 'VCGLIB' API
-Version: 0.15
-Date: 2017-01-13
+Version: 0.16
+Date: 2017-03-30
 Authors@R: c(
     person("Stefan", "Schlager",, "zarquon42@gmail.com", c("aut", "cre", "cph")),
     person("Girinon", "Francois",,, c("ctb"))
@@ -16,7 +16,7 @@ Description: Operations on triangular meshes based on 'VCGLIB'. This package
     and it is the base of most of the software tools of the Visual Computing Lab of
     the Italian National Research Council Institute ISTI <http://vcg.isti.cnr.it>,
     like 'metro' and 'MeshLab'. The 'VCGLIB' source is pulled from trunk
-    <svn://svn.code.sf.net/p/vcg/code/trunk/vcglib> and patched to work with options
+    <https://github.com/cnr-isti-vclab/vcglib> and patched to work with options
     determined by the configure script as well as to work with the header files
     included by 'RcppEigen'.
 Depends: R (>= 3.1.0)
@@ -29,11 +29,11 @@ Copyright: see files COPYRIGHTS for detailed information
 LazyLoad: yes
 Biarch: yes
 URL: http://github.com/zarquon42b/Rvcg, http://vcg.sf.net/
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 NeedsCompilation: yes
-Packaged: 2017-01-31 12:08:34 UTC; schlager
+Packaged: 2017-04-05 11:50:56 UTC; schlager
 Author: Stefan Schlager [aut, cre, cph],
   Girinon Francois [ctb]
 Maintainer: Stefan Schlager <zarquon42@gmail.com>
 Repository: CRAN
-Date/Publication: 2017-01-31 17:04:19
+Date/Publication: 2017-04-06 06:54:12 UTC
