@@ -12,6 +12,8 @@
 #' @examples
 #' data(humface)
 #' vcgPlyWrite(humface,filename = "humface")
+#' ## remove it 
+#' unlink("humface.ply")
 #' @rdname vcgPlyWrite
 #' @export 
 vcgPlyWrite <- function(mesh, filename, binary = TRUE, ...) UseMethod("vcgPlyWrite")
@@ -34,13 +36,20 @@ vcgPlyWrite.mesh3d <- function(mesh, filename=dataname, binary = TRUE, addNormal
         hasCol <- TRUE
         vn <- ncol(vb)
         col = rep("#FFFFFF", vn)
-        if (!is.null(mesh$it))
-            tmp1 <- data.frame(it = as.vector(mesh$it))
-        else
-            tmp1 <- data.frame(it=1:vn)
-        tmp1$rgb <- as.vector(mesh$material$color)
-        tmp1 <- unique(tmp1)
-        col[tmp1$it] <- tmp1$rgb
+        if (length(mesh$material$color) != vn) {
+            if (!is.null(mesh$it))
+                if ((length(mesh$material$color) != length(mesh$it))) {
+                    stop("mesh color is not correct")
+                } else {
+                    tmp1 <- data.frame(it = as.vector(mesh$it))
+                    
+                    tmp1 <- data.frame(it=1:vn)
+                    tmp1$rgb <- as.vector(mesh$material$color)
+                    tmp1 <- unique(tmp1)
+                    col[tmp1$it] <- tmp1$rgb
+                }
+        } else 
+            col<- mesh$material$color
         colvec <- matrix(col2rgb(col), 3, vn, byrow = F)
         storage.mode(colvec) <- "integer"
     }
@@ -71,6 +80,7 @@ vcgPlyWrite.matrix <- function(mesh,filename=dataname, binary = TRUE, addNormals
 #' @examples
 #' data(humface)
 #' vcgStlWrite(humface,filename = "humface")
+#' unlink("humface.stl")
 #' @rdname vcgStlWrite
 #' @export 
 vcgStlWrite <- function(mesh, filename=dataname, binary = FALSE) {
@@ -101,6 +111,7 @@ vcgStlWrite <- function(mesh, filename=dataname, binary = FALSE) {
 #' @examples
 #' data(humface)
 #' vcgOffWrite(humface,filename = "humface")
+#' unlink("humface.off")
 #' @rdname vcgOffWrite
 #' @export 
 vcgOffWrite <- function(mesh, filename=dataname) {
@@ -133,6 +144,7 @@ vcgOffWrite <- function(mesh, filename=dataname) {
 #' @examples
 #' data(humface)
 #' vcgObjWrite(humface,filename = "humface")
+#' unlink("humface.obj")
 #' @export 
 vcgObjWrite <- function(mesh, filename=dataname,writeNormals=TRUE) {
     if (!inherits(mesh,"mesh3d"))
@@ -165,6 +177,7 @@ vcgObjWrite <- function(mesh, filename=dataname,writeNormals=TRUE) {
 #' @examples
 #' data(humface)
 #' vcgWrlWrite(humface,filename = "humface")
+#' unlink("humface.wrl")
 #' @export 
 vcgWrlWrite <- function(mesh, filename=dataname, writeCol=TRUE,writeNormals=TRUE)
 {

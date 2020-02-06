@@ -1,4 +1,4 @@
-#include "typedefCurvature.h"
+#include "typedef.h"
 #include "RvcgIO.h"
 //#include <wrap/ply/plylib.cpp>
 #include <RcppArmadillo.h>
@@ -13,32 +13,33 @@ RcppExport SEXP Rcurvature( SEXP vb_, SEXP it_)
   try {
     // declare Mesh and helper variables
     int i, j;
-    CurveMyMesh m;
+    MyMesh m;
     VertexIterator vi;
     FaceIterator fi;
  
-    Rvcg::IOMesh<CurveMyMesh>::RvcgReadR(m,vb_,it_);
-    /*m.vert.EnableQuality();
+    Rvcg::IOMesh<MyMesh>::RvcgReadR(m,vb_,it_);
+    m.vert.EnableQuality();
       m.vert.EnableCurvatureDir();
       m.vert.EnableCurvature();
       m.vert.EnableVFAdjacency();
       m.face.EnableFFAdjacency();
-      m.face.EnableVFAdjacency();*/
+      m.face.EnableVFAdjacency();
   
-    tri::UpdateTopology<CurveMyMesh>::FaceFace(m);
-    tri::UpdateTopology<CurveMyMesh>::VertexFace(m);
-    tri::UpdateBounding<CurveMyMesh>::Box(m);
-    tri::Allocator<CurveMyMesh>::CompactVertexVector(m);
-    tri::UpdateCurvature<CurveMyMesh>::MeanAndGaussian(m);
-    tri::UpdateQuality<CurveMyMesh>::VertexFromRMSCurvature(m);
+    tri::UpdateTopology<MyMesh>::FaceFace(m);
+    tri::UpdateTopology<MyMesh>::VertexFace(m);
+    tri::UpdateBounding<MyMesh>::Box(m);
+    tri::Allocator<MyMesh>::CompactVertexVector(m);
+    tri::UpdateCurvature<MyMesh>::MeanAndGaussian(m);
+    tri::UpdateQuality<MyMesh>::VertexFromRMSCurvature(m);
+    tri::UpdateCurvature<MyMesh>::PrincipalDirections(m);
    
     //Bordersearch
-    tri::UpdateFlags<CurveMyMesh>::FaceBorderFromNone(m);
-    tri::UpdateSelection<CurveMyMesh>::FaceFromBorderFlag(m);
-    tri::UpdateFlags<CurveMyMesh>::VertexBorderFromNone(m);
-    tri::UpdateSelection<CurveMyMesh>::VertexFromBorderFlag(m);
+    tri::UpdateFlags<MyMesh>::FaceBorderFromNone(m);
+    tri::UpdateSelection<MyMesh>::FaceFromBorderFlag(m);
+    tri::UpdateFlags<MyMesh>::VertexBorderFromNone(m);
+    tri::UpdateSelection<MyMesh>::VertexFromBorderFlag(m);
   
-    std::vector<float> gaussvb, meanvb, gaussitmax, meanitmax;
+    std::vector<float> gaussvb, meanvb, gaussitmax, meanitmax, K1, K2;
     std::vector<float> RMSvb;
     std::vector<int> bordervb, borderit;
     vi=m.vert.begin();
@@ -47,6 +48,9 @@ RcppExport SEXP Rcurvature( SEXP vb_, SEXP it_)
       gaussvb.push_back(vi->Kg());
       meanvb.push_back(vi->Kh());
       RMSvb.push_back(vi->Q());
+      K1.push_back(vi->K1());
+      K2.push_back(vi->K2());
+		   
       if ((*vi).IsS())
 	bordervb.push_back(1);
       else
@@ -83,7 +87,9 @@ RcppExport SEXP Rcurvature( SEXP vb_, SEXP it_)
 			      Rcpp::Named("gaussitmax") = gaussitmax,
 			      Rcpp::Named("borderit") = borderit,
 			      Rcpp::Named("bordervb") = bordervb,
-			      Rcpp::Named("meanitmax") = meanitmax
+			      Rcpp::Named("meanitmax") = meanitmax,
+			      Rcpp::Named("K1") = K1,
+			      Rcpp::Named("K2") = K2
 			      );
   } catch (std::exception& e) {
     ::Rf_error( e.what());
