@@ -1,7 +1,7 @@
-d69bb7e3f18af272c770099f988bb24c *DESCRIPTION
+a5dd6df0116cabd6dd5fa605cd68be34 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 e08fe3aee3c1135cb28d3d4336d5c3ad *NAMESPACE
-c94f5f4d89a9eb06dcca0f4880bd7b8e *R/Rvcg-package.R
+a1616d063b8360c5a50663eb4ca8eb15 *R/Rvcg-package.R
 2afb2cdada828c2f13c0dd878b77b341 *R/meshInfo.r
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 7bafaeb6c3bf9c2ecc129d9af6dab234 *R/normorient.r
@@ -43,7 +43,7 @@ db17f2c29701d7264f7365e9cd1b702d *inst/CITATION
 82859a94dba98071d74f06fbebc62cd4 *inst/COPYRIGHTS
 ae57b1b944db72d0e4141fede209c5a9 *inst/NEWS.Rd
 df6fedee25f982212d0432241728d1b0 *man/Rvcg-deprecated.Rd
-318dcc9dad28fa9dbc4d79cdcce6e968 *man/Rvcg-package.Rd
+63868956ae2c5cb92dfaa8e92f4293d1 *man/Rvcg-package.Rd
 070ada99b41d2aaa66ca7dd8976bc2f9 *man/checkFaceOrientation.Rd
 959c26f329d0fa7a253bb21b1a36ca52 *man/dummyhead.Rd
 173af7f46dc03b8032a3b9a9751d78c7 *man/humface.Rd
@@ -371,7 +371,7 @@ e42fc66bf093692de858b2628006eb00 *src/vcglib/vcg/space/segment3.h
 1d64a56ead8011ae1f40380ddb8fa95b *src/vcglib/vcg/space/smallest_enclosing.h
 bca1c13feb43a469cf25b05784e12837 *src/vcglib/vcg/space/space.h
 823107694f5cb2f8b09a0b6be28f8668 *src/vcglib/vcg/space/sphere3.h
-033ca6ce49d71fa237d49353246af102 *src/vcglib/vcg/space/tetra3.h
+d76d297ae28e6ed2fe794579fd8a2555 *src/vcglib/vcg/space/tetra3.h
 02a007d4e7bcc9ecd0e0658dae9e2123 *src/vcglib/vcg/space/texcoord2.h
 59162cb3aeaaa7903389ddc5e358b18f *src/vcglib/vcg/space/triangle2.h
 739ff303f9ca49a31f26e705fa2143f4 *src/vcglib/vcg/space/triangle3.h
@@ -539,7 +539,7 @@ ad3ae1920947f5b520e3a7fdb7682213 *src/vcglib/wrap/nanoply/include/nanoplyWrapper
 2c8fd1b1b33552467f9ce4e51116517a *src/vcglib/wrap/openfbx/src/ofbx.cpp
 a420f9b72520a4897301b5fb49547573 *src/vcglib/wrap/openfbx/src/ofbx.h
 b658f0674c75d8ca306df55206f6fa5a *src/vcglib/wrap/opensg/vertex_component.h
-558074815e54a4fe154d388259215306 *src/vcglib/wrap/ply/plylib.cpp
+b5e21455fa517fda4ce7592c6936a230 *src/vcglib/wrap/ply/plylib.cpp
 6bc1a1fc62a0ceb7b881fb376bbaf634 *src/vcglib/wrap/ply/plylib.h
 a97fe79bcd87363def52b161846b8a8f *src/vcglib/wrap/ply/plystuff.h
 36de283fa1a52cc0d93f015c339996a7 *src/vcglib/wrap/qt/Outline2ToQImage.cpp
