@@ -3,7 +3,7 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
 
-/* FIXME: 
+/* FIXME:
    Check these declarations against the C/Fortran source code.
 */
 
@@ -22,22 +22,26 @@ extern SEXP RclosestKD(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEX
 extern SEXP Rclost(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RCone(SEXP, SEXP, SEXP, SEXP);
 extern SEXP Rcurvature(SEXP, SEXP);
+extern SEXP Rdijkstra(SEXP, SEXP, SEXP, SEXP);
 extern SEXP RDodecahedron(SEXP);
+extern SEXP RGeodesicPath(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RgetEdge(SEXP, SEXP, SEXP);
+extern SEXP RgetFaceNormals(SEXP, SEXP);
 extern SEXP RHexahedron(SEXP);
 extern SEXP RIcosahedron(SEXP);
 extern SEXP Rintersect(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP Risolated(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP RisotropicResampling(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP Rkdtree(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP Rkmeans(SEXP, SEXP, SEXP, SEXP);
 extern SEXP RMarchC(SEXP, SEXP);
 extern SEXP Rmeshres(SEXP, SEXP);
 extern SEXP Rmeshvol(SEXP);
+extern SEXP RMeshWrite(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RmeshXPtr(SEXP);
 extern SEXP Rmetro(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP ROctahedron(SEXP);
 extern SEXP ROneRing(SEXP, SEXP, SEXP);
-extern SEXP RMeshWrite(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RQEdecim(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP Rsample(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RsearchKDtree(SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -46,12 +50,12 @@ extern SEXP Rsmooth(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RSphere(SEXP, SEXP);
 extern SEXP RSphericalCap(SEXP, SEXP, SEXP);
 extern SEXP RSquare(SEXP);
-// extern SEXP RSTLWrite(SEXP, SEXP, SEXP, SEXP);
 extern SEXP Rsubdivision(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RTetrahedron(SEXP);
 extern SEXP RuniformResampling(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RupdateNormals(SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RVFadj(SEXP, SEXP);
+extern SEXP RVVadj(SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CMethodDef CEntries[] = {
     {"Rborder", (DL_FUNC) &Rborder, 6},
@@ -70,22 +74,26 @@ static const R_CallMethodDef CallEntries[] = {
     {"Rclost",                        (DL_FUNC) &Rclost,                         8},
     {"RCone",                         (DL_FUNC) &RCone,                          4},
     {"Rcurvature",                    (DL_FUNC) &Rcurvature,                     2},
+    {"Rdijkstra",                     (DL_FUNC) &Rdijkstra,                      4},
     {"RDodecahedron",                 (DL_FUNC) &RDodecahedron,                  1},
+    {"RGeodesicPath",                 (DL_FUNC) &RGeodesicPath,                  5},
     {"RgetEdge",                      (DL_FUNC) &RgetEdge,                       3},
+    {"RgetFaceNormals",               (DL_FUNC) &RgetFaceNormals,                2},
     {"RHexahedron",                   (DL_FUNC) &RHexahedron,                    1},
     {"RIcosahedron",                  (DL_FUNC) &RIcosahedron,                   1},
     {"Rintersect",                    (DL_FUNC) &Rintersect,                     8},
     {"Risolated",                     (DL_FUNC) &Risolated,                      6},
+    {"RisotropicResampling",          (DL_FUNC) &RisotropicResampling,          13},
     {"Rkdtree",                       (DL_FUNC) &Rkdtree,                        6},
     {"Rkmeans",                       (DL_FUNC) &Rkmeans,                        4},
     {"RMarchC",                       (DL_FUNC) &RMarchC,                        2},
     {"Rmeshres",                      (DL_FUNC) &Rmeshres,                       2},
     {"Rmeshvol",                      (DL_FUNC) &Rmeshvol,                       1},
+    {"RMeshWrite",                    (DL_FUNC) &RMeshWrite,                     8},
     {"RmeshXPtr",                     (DL_FUNC) &RmeshXPtr,                      1},
     {"Rmetro",                        (DL_FUNC) &Rmetro,                        14},
     {"ROctahedron",                   (DL_FUNC) &ROctahedron,                    1},
     {"ROneRing",                      (DL_FUNC) &ROneRing,                       3},
-    {"RMeshWrite",                    (DL_FUNC) &RMeshWrite,                     8},
     {"RQEdecim",                      (DL_FUNC) &RQEdecim,                       5},
     {"Rsample",                       (DL_FUNC) &Rsample,                        5},
     {"RsearchKDtree",                 (DL_FUNC) &RsearchKDtree,                  5},
@@ -94,12 +102,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"RSphere",                       (DL_FUNC) &RSphere,                        2},
     {"RSphericalCap",                 (DL_FUNC) &RSphericalCap,                  3},
     {"RSquare",                       (DL_FUNC) &RSquare,                        1},
-    //    {"RSTLWrite",                     (DL_FUNC) &RSTLWrite,                      4},
     {"Rsubdivision",                  (DL_FUNC) &Rsubdivision,                   6},
     {"RTetrahedron",                  (DL_FUNC) &RTetrahedron,                   1},
     {"RuniformResampling",            (DL_FUNC) &RuniformResampling,             9},
     {"RupdateNormals",                (DL_FUNC) &RupdateNormals,                 5},
     {"RVFadj",                        (DL_FUNC) &RVFadj,                         2},
+    {"RVVadj",                        (DL_FUNC) &RVVadj,                         5},
     {NULL, NULL, 0}
 };
 
