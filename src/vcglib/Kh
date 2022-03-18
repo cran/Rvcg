@@ -1,0 +1,130 @@
+docs/Doxygen/attributes.dxy:Practically the difference is that every optional component has its non optional counterpart and is accessed through a member function of the simplex, so that when you write your algorithm you use vi->N() to access the normal both it is has been declared as optional or not, while the attributes are accessed by a handle which is returned at the creation of the attribute.
+.pc/12_include_time.h_point_sampling.h.patch/vcg/complex/algorithms/point_sampling.h:      if(vi->IsS()) ps.AddVert(*vi);
+.pc/12_include_time.h_point_sampling.h.patch/vcg/complex/algorithms/point_sampling.h:            removedCnt += montecarloSHT.RemoveInSphere(vi->cP(),diskRadius);
+.pc/12_include_time.h_point_sampling.h.patch/vcg/complex/algorithms/point_sampling.h:          removedCnt += montecarloSHT.RemoveInSphere(vi->cP(),diskRadius);
+apps/sample/trimesh_allocate/trimesh_allocate.cpp:  ivp[0]=&*vi; vi->P()=MyMesh::CoordType ( 0.0, 0.0, 0.0); ++vi;
+apps/sample/trimesh_allocate/trimesh_allocate.cpp:  ivp[1]=&*vi; vi->P()=MyMesh::CoordType ( 1.0, 0.0, 0.0); ++vi;
+apps/sample/trimesh_allocate/trimesh_allocate.cpp:  ivp[2]=&*vi; vi->P()=MyMesh::CoordType ( 0.0, 1.0, 0.0); ++vi;
+apps/sample/polygonmesh_quadsimpl/polygonmesh_quadsimpl.cpp:        S_Fit[vi] = vi->Q();
+apps/sample/polygonmesh_quadsimpl/polygonmesh_quadsimpl.cpp:        M_Fit[vi] = vi->Q();
+apps/sample/trimesh_geodesic/trimesh_geodesic.cpp:    if(Distance(vi->P(),c)<minDist)
+apps/sample/trimesh_geodesic/trimesh_geodesic.cpp:      minDist = Distance(vi->P(),c);
+apps/sample/trimesh_hole/trimesh_hole.cpp:        if( vi->IsUserBit(UBIT) )
+apps/sample/trimesh_hole/trimesh_hole.cpp:            vi->ClearUserBit(UBIT);
+apps/unsupported/shadevis/visshader.h:			    float gval=(VV[vi-m.vert.begin()]-minv)/(maxv-minv);
+apps/unsupported/shadevis/visshader.h:				float gval=(VV[vi-m.vert.begin()]-minv)/(maxv-minv);
+apps/unsupported/shadevis/visshader.h://		bitset<VisMax> &msk=VM[vi-m.vert.begin()];
+vcg/complex/allocate.h:    vi->P()=p0;
+vcg/complex/allocate.h:    vi->P()=p1;
+vcg/complex/allocate.h:    vi->P()=p0;
+vcg/complex/allocate.h:    vi->P()=p1;
+vcg/complex/allocate.h:    vi->P()=p2;
+vcg/complex/allocate.h:          if (!vi->IsD())
+vcg/complex/allocate.h:            pu.Update(vi->VTp());
+vcg/complex/algorithms/curve_on_manifold.h:      FaceType *f = GetClosestFaceIP(vi->cP(),ip);
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[0]>0 && ip[1]>0) { vi->P() = f->P(0)*ip[0]+f->P(1)*ip[1]; edgeSnapCnt++; assert(ip[2]==0); vi->C()=Color4b::White;}
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[0]>0 && ip[2]>0) { vi->P() = f->P(0)*ip[0]+f->P(2)*ip[2]; edgeSnapCnt++; assert(ip[1]==0); vi->C()=Color4b::White;}
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[1]>0 && ip[2]>0) { vi->P() = f->P(1)*ip[1]+f->P(2)*ip[2]; edgeSnapCnt++; assert(ip[0]==0); vi->C()=Color4b::White;}
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[0]==1.0) { vi->P() = f->P(0); vertSnapCnt++; assert(ip[1]==0 && ip[2]==0); vi->C()=Color4b::Black;  }
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[1]==1.0) { vi->P() = f->P(1); vertSnapCnt++; assert(ip[0]==0 && ip[2]==0); vi->C()=Color4b::Black;}
+vcg/complex/algorithms/curve_on_manifold.h:        if(ip[2]==1.0) { vi->P() = f->P(2); vertSnapCnt++; assert(ip[0]==0 && ip[1]==0); vi->C()=Color4b::Black;}
+vcg/complex/algorithms/curve_on_manifold.h:        if (deg > 2) { nonmanifCnt++; vi->C()=Color4b::Magenta; }
+vcg/complex/algorithms/curve_on_manifold.h:        if (deg < 2) { borderCnt++;   vi->C()=Color4b::Green;} 
+vcg/complex/algorithms/curve_on_manifold.h:        if (deg== 2) { midCnt++;      vi->C()=Color4b::Blue;} 
+vcg/complex/algorithms/curve_on_manifold.h:      FaceType *f = GetClosestFaceIP(vi->cP(),ip);
+vcg/complex/algorithms/curve_on_manifold.h:      FaceType *f = GetClosestFaceIP(vi->cP(),ip);
+vcg/complex/algorithms/bitquad_optimization.h:  for (VertexIterator vi = m.vert.begin();  vi!=m.vert.end(); vi++) if (!vi->IsD()) vi->ClearV();
+vcg/complex/algorithms/voronoi_remesher.h:				vi->ImportData(*v);
+vcg/complex/algorithms/create/tetramesh_support.h:                vi->P() = verts[i + 0]->P();
+vcg/complex/algorithms/create/tetramesh_support.h:                vi->P() = verts[i + 1]->P();
+vcg/complex/algorithms/create/tetramesh_support.h:                vi->P() = verts[i + 2]->P();
+vcg/complex/algorithms/create/extrude.h:    vp->P()=vi->P();
+vcg/complex/algorithms/create/extrude.h:    vp->P()= sim*vi->P() ;
+vcg/complex/algorithms/create/extrude.h:    vi->P() = sim*vi->P();
+vcg/complex/algorithms/create/platonic.h:    float cosVi =  vi->P().Norm();
+vcg/complex/algorithms/create/platonic.h:    vi->P()[2] = cos(angVi) -  cos(angleHalfRad);
+vcg/complex/algorithms/create/platonic.h:        vi->P().Normalize();
+vcg/complex/algorithms/create/platonic.h:            vi->P().Normalize();
+vcg/complex/algorithms/create/plymc/volume.h:                rpos= rvi-V.rv.begin();
+vcg/complex/algorithms/create/plymc/volume.h:                lpos= lvi-(*rvi).begin();
+vcg/complex/algorithms/create/plymc/volume.h:            rpos= rvi-V.rv.begin();
+vcg/complex/algorithms/pointcloud_normal.h:        tree.doQueryK(vi->cP(),nn,nq);
+vcg/complex/algorithms/pointcloud_normal.h:        vi->N()=plane.Direction();
+vcg/complex/algorithms/pointcloud_normal.h:        if ( vi->N().dot(p.viewPoint- vi->P())<0.0)
+vcg/complex/algorithms/pointcloud_normal.h:            vi->N()=-(*vi).N();
+vcg/complex/algorithms/pointcloud_normal.h:      while(vi!=m.vert.end() && vi->IsV())
+vcg/complex/algorithms/pointcloud_normal.h:      vi->SetV();
+vcg/complex/algorithms/occupancy_grid.h:                if (vi->second > 0) {
+vcg/complex/algorithms/occupancy_grid.h:                    int m_s = vi->first.first;
+vcg/complex/algorithms/occupancy_grid.h:                    int m_t = vi->first.second;
+vcg/complex/algorithms/occupancy_grid.h:                    int area = vi->second;
+vcg/complex/algorithms/mesh_assert.h:    for(VertexIterator vi=m.vert.begin();vi!=m.vert.end();++vi) if(!vi->IsD())
+vcg/complex/algorithms/mesh_assert.h:        if(vi->VFp() == nullptr)
+vcg/complex/algorithms/mesh_assert.h:    for(VertexIterator vi=m.vert.begin();vi!=m.vert.end();++vi) if(!vi->IsD())
+vcg/complex/algorithms/mesh_assert.h:        if(fabs(vi->cN().Norm()-1.0)>0.000001)
+vcg/complex/algorithms/mesh_assert.h:      if(!vi->IsD())
+vcg/complex/algorithms/mesh_assert.h:        if(!vi->IsV())
+vcg/complex/algorithms/update/color.h:					p[0] = (vi->P()/period[0])+offset;
+vcg/complex/algorithms/update/color.h:					p[1] = (vi->P()/period[1])+offset;
+vcg/complex/algorithms/update/color.h:					p[2] = (vi->P()/period[2])+offset;
+vcg/complex/algorithms/update/color.h:					p = (vi->P() / period) + offset;
+vcg/complex/algorithms/update/topology.h:      if (!vi->IsD())
+vcg/complex/algorithms/update/topology.h:        assert((numVertex[tri::Index(m,*vi)] == 0) == (vi->VEp()==0) );
+vcg/complex/algorithms/update/topology.h:        if (!vi->IsD())
+vcg/complex/algorithms/update/topology.h:        if(vi->VFp()!=0) // unreferenced vertices MUST have VF == 0;
+vcg/complex/algorithms/update/topology.h:            assert(tri::IsValidPointer(m, vi->VFp()));
+vcg/complex/algorithms/update/topology.h:            VFi.f=vi->VFp();
+vcg/complex/algorithms/update/topology.h:            VFi.z=vi->VFi();
+vcg/complex/algorithms/update/selection.h:    if(angleSumH[vi]<angleRad && vi->IsB())
+vcg/complex/algorithms/update/curvature_fitting.h:      CoordType x = (project(&*vi,vp) - vi->P()).Normalize();
+vcg/complex/algorithms/update/curvature_fitting.h:      //assert(fabs(x * vi->N()) < 0.1);
+vcg/complex/algorithms/update/curvature_fitting.h:      res[1] = (vi->N() ^ res[0]).Normalize();
+vcg/complex/algorithms/update/curvature_fitting.h:      res[2] = (vi->N())/(vi->N()).Norm();
+vcg/complex/algorithms/update/curvature_fitting.h:            vi->N() = ref[0] * n[0] + ref[1] * n[1] + ref[2] * n[2];
+vcg/complex/algorithms/skeleton.h:    this->vvs.psd.surfTree->doQueryClosest(vi->P(),ind,sqdist);
+vcg/complex/algorithms/skeleton.h:      this->vvs.psd.surfTree->doQueryDist( vi->P(), minDist*distThr,indVec,sqDistVec);
+vcg/complex/algorithms/skeleton.h:      if(vi->IsV()) tri::Allocator<MeshType>::AddVertex(*skelM,vi->P());
+vcg/complex/algorithms/voronoi_processing.h:      if( (sources[vi]->IsS() && vi->IsS()) || (!sources[vi]->IsS()))
+vcg/complex/algorithms/voronoi_processing.h:        dVec[seedIndex].AddPoint(vi->P());
+vcg/complex/algorithms/voronoi_processing.h:      dVec[seedIndex].AddPoint(vi->P());
+vcg/complex/algorithms/voronoi_processing.h:    ScalarType val = dVec[seedIndex].Eval(vi->P());
+vcg/complex/algorithms/voronoi_processing.h:    vi->Q()=val;
+vcg/complex/algorithms/voronoi_processing.h:    if(!vpp.constrainSelectedSeed || !sources[vi]->IsS() || vi->IsS())
+vcg/complex/algorithms/voronoi_processing.h:    if(!vpp.constrainSelectedSeed || !sources[vi]->IsS() || vi->IsS())
+vcg/complex/algorithms/voronoi_processing.h:      seedTree.doQueryClosest(vi->P(),seedInd,sqdist);
+vcg/complex/algorithms/voronoi_processing.h:      vi->Q()=sqrt(sqdist);
+vcg/complex/algorithms/voronoi_processing.h:      sumVec[seedInd].second+=vi->cP()*area[vi];
+vcg/complex/algorithms/voronoi_processing.h:    assert(vi->VFp() && "Require mesh without unreferenced vertexes\n");
+vcg/complex/algorithms/voronoi_volume_sampling.h:      seedTree->doQueryClosest(vi->P(),seedInd,sqdist);
+vcg/complex/algorithms/voronoi_volume_sampling.h:      sumVec[seedInd].second+=vi->cP();
+vcg/complex/algorithms/voronoi_volume_sampling.h:      seedTree->doQueryClosest(vi->P(),seedInd,sqdist);
+vcg/complex/algorithms/voronoi_volume_sampling.h:      dVec[seedInd].AddPoint(vi->P());
+vcg/complex/algorithms/voronoi_volume_sampling.h:      seedTree->doQueryClosest(vi->P(),seedInd,sqdist);
+vcg/complex/algorithms/voronoi_volume_sampling.h:      ScalarType val = dVec[seedInd].Eval(vi->P());
+vcg/complex/algorithms/isotropic_remeshing.h:                vi->Q() = tot / (std::max(1, ((int)ff.size()-1)));
+vcg/complex/algorithms/isotropic_remeshing.h:                vi->SetV();
+vcg/complex/algorithms/isotropic_remeshing.h:                FaceType* fp = GetClosestFaceBase(*params.mProject, params.grid, vi->cP(), maxDist, minDist, newP/*, normP, barP*/);
+vcg/complex/algorithms/isotropic_remeshing.h:                    vi->P() = newP;
+vcg/complex/algorithms/convex_hull.h:     ci->P()=vi->P()-viewpoint;
+vcg/complex/algorithms/convex_hull.h:     ScalarType d = Norm(vi->P());
+vcg/complex/algorithms/convex_hull.h:     vi->P() = vi->P() + vi->P()*ScalarType(2.0*(R - d)/d);
+vcg/complex/algorithms/local_optimization/tri_edge_collapse_quadric.h:          const double quality01squared = pow((double)((vi->Q()-minQ)/(maxQ-minQ)),2.0);
+vcg/complex/algorithms/smooth.h:                tree->doQueryK(vi->cP(), neighborNum, nq);
+vcg/complex/algorithms/smooth.h:                    if (m.vert[neightId].cN() * vi->cN() > 0)
+vcg/complex/algorithms/smooth.h:                vi->N() = TD[vi];
+vcg/complex/algorithms/clean.h:			if (!vi->IsD()) vertVisited[&(*vi)] = true;
+vcg/complex/algorithms/clean.h:			if (!vi->IsD() && !(vertVisited[&(*vi)])) countV++;
+vcg/complex/algorithms/clean.h:		for (VertexIterator vi = m.vert.begin(); vi != m.vert.end(); ++vi)	if (!vi->IsD())
+vcg/complex/algorithms/clean.h:			if (!vi->IsD())
+vcg/complex/algorithms/point_sampling.h:      if(vi->IsS()) ps.AddVert(*vi);
+vcg/complex/algorithms/point_sampling.h:            removedCnt += montecarloSHT.RemoveInSphere(vi->cP(),diskRadius);
+vcg/complex/algorithms/point_sampling.h:          removedCnt += montecarloSHT.RemoveInSphere(vi->cP(),diskRadius);
+vcg/complex/algorithms/outline_support.h:        //      printf("(%5.2f %5.2f %5.2f)",vi->cP()[0],vi->cP()[1],vi->cP()[2]);
+vcg/complex/algorithms/bitquad_support.h:  for (VertexIterator vi = m.vert.begin();  vi!=m.vert.end(); vi++) if (!vi->IsD()) {
+wrap/io_trimesh/export_obj.h:      VertexId[vi-m.vert.begin()]=numvert;
+wrap/io_trimesh/export_vrml.h:							float r = float(vi->C()[0])/255;
+wrap/io_trimesh/export_vrml.h:							float g = float(vi->C()[1])/255;
+wrap/io_trimesh/export_vrml.h:							float b = float(vi->C()[2])/255;
+wrap/io_trimesh/io_ply.h:        if(!vi->IsD())
+wrap/gl/trimesh.h:					//					glDrawElements(vi->glmode ,vi->len,GL_UNSIGNED_SHORT,&TStripVEI[vi->start] );
+Binary file .git/objects/pack/pack-bcf7ed614528f1563469b2484b25feb04840bddc.pack matches

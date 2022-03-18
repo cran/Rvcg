@@ -23,8 +23,10 @@ Compute pseudo-geodesic distance between two points on a mesh
 Make sure to have a clean manifold mesh. Note that this computes the length of the pseudo-geodesic path (following the edges) between the two vertices closest to these points.
 }
 \examples{
+\dontrun{
 data(humface)
 pt1 <- humface.lm[1,]
 pt2 <- humface.lm[5,]
 vcgGeodist(humface,pt1,pt2)
+}
 }

@@ -24,11 +24,11 @@ vcgCurve(mesh)
 calculate curvature of faces/vertices of a triangular mesh using various methods.
 }
 \examples{
-
+ \dontrun{
 data(humface)
 curv <- vcgCurve(humface)
 ##visualise per vertex mean curvature
-\dontrun{
+
 require(Morpho)
 meshDist(humface,distvec=curv$meanvb,from=-0.2,to=0.2,tol=0.01)
 }
