@@ -24,13 +24,11 @@ Make sure to have a clean manifold mesh. Note that this computes the length of t
 }
 \examples{
 ## Compute geodesic distance between all mesh vertices and the first vertex of a mesh
-\dontrun{
 data(humface)
 geo <- vcgDijkstra(humface,1)
 if (interactive()) {
 require(Morpho);require(rgl)
 meshDist(humface,distvec = geo)
 spheres3d(vert2points(humface)[1,],col=2)
-}
 }
 }

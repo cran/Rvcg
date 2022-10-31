@@ -25,10 +25,8 @@ Compute geodesic path and path length between vertices on a mesh
 Currently no reachability checks are performed, so you have to be sure that the mesh is connected, or at least that the source and target vertices are reachable from one another.
 }
 \examples{
-\dontrun{
 data(humface)
 p = vcgGeodesicPath(humface,50,c(500,5000))
 p$paths[[1]];   # The path 50..500
 p$geodist[500]; # Its path length.
-}
 }

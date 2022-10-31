@@ -6,14 +6,12 @@
 #' @return returns a vector of shortest distances for each of the vertices to one of the vertices referenced in \code{vertpointer}. If \code{maxdis}t is in use (not \code{NULL}), the distance values for vertices outside the requested \code{maxdist} are not computed and appear as \code{0}.
 #' @examples
 #' ## Compute geodesic distance between all mesh vertices and the first vertex of a mesh
-#' \dontrun{
 #' data(humface)
 #' geo <- vcgDijkstra(humface,1)
 #' if (interactive()) {
 #' require(Morpho);require(rgl)
 #' meshDist(humface,distvec = geo)
 #' spheres3d(vert2points(humface)[1,],col=2)
-#' }
 #' }
 #' @note Make sure to have a clean manifold mesh. Note that this computes the length of the pseudo-geodesic path (following the edges) between the two vertices.
 #' @export
@@ -39,12 +37,10 @@ vcgDijkstra <- function(x, vertpointer, maxdist=NULL) {
 #' @return returns the geodesic distance between \code{pt1} and \code{pt2}.
 #' @note Make sure to have a clean manifold mesh. Note that this computes the length of the pseudo-geodesic path (following the edges) between the two vertices closest to these points.
 #' @examples
-#' \dontrun{
 #' data(humface)
 #' pt1 <- humface.lm[1,]
 #' pt2 <- humface.lm[5,]
 #' vcgGeodist(humface,pt1,pt2)
-#' }
 #' @export
 vcgGeodist <- function(x,pt1,pt2) {
     if (length(pt1) == 1)
@@ -66,12 +62,10 @@ vcgGeodist <- function(x,pt1,pt2) {
 #' @param maxdist numeric, the maximal distance to travel along the mesh edges during geodesic distance computation.
 #' @return named list with two entries as follows. \code{'paths'}: list of integer vectors, representing the paths. \code{'geodist'}: double vector, the geodesic distances from the source vertex to all vertices in the graph.
 #' @examples
-#' \dontrun{
 #' data(humface)
 #' p = vcgGeodesicPath(humface,50,c(500,5000))
 #' p$paths[[1]];   # The path 50..500
 #' p$geodist[500]; # Its path length.
-#' }
 #' @export
 vcgGeodesicPath <- function(x, source, targets, maxdist=1e6) {
   num_verts = ncol(x$vb);
