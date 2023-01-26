@@ -1,7 +1,7 @@
-74d6ef5b9389f9108af743a071281431 *DESCRIPTION
+251db0b10ef10dc4f16ad61af99c9e7c *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 d7c0ccaf6b617450575872a399311a22 *NAMESPACE
-9823fd986584fcc94e50776689d62eb7 *R/Rvcg-package.R
+5fdfca246d24da3621eedf075ab05485 *R/Rvcg-package.R
 2afb2cdada828c2f13c0dd878b77b341 *R/meshInfo.r
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 176d68914c5928cd62c4a11219274300 *R/normorient.r
@@ -46,7 +46,7 @@ db17f2c29701d7264f7365e9cd1b702d *inst/CITATION
 82859a94dba98071d74f06fbebc62cd4 *inst/COPYRIGHTS
 f4f7d947339887306418bec2c8468881 *inst/NEWS.Rd
 df6fedee25f982212d0432241728d1b0 *man/Rvcg-deprecated.Rd
-cea4a812cae269c1aaabdcefc37d51b9 *man/Rvcg-package.Rd
+13c8bfce6f4b215a068388f049b00f03 *man/Rvcg-package.Rd
 8557949e2a406f81ecfa32f58d24f94b *man/checkFaceOrientation.Rd
 50faefef4ae41cc9df0bf054c0793e21 *man/dummyhead.Rd
 eb6b8037f5b83f17bd739f9dd19b92bc *man/humface.Rd
@@ -509,7 +509,7 @@ edaaedf138330486ae11d177f3e1d7a6 *src/vcglib/wrap/io_trimesh/import_fbx.h
 610fd0c12bd66774e0e19d26709e7d76 *src/vcglib/wrap/io_trimesh/import_field.h
 d6d5ee2b5988ea4204b87ae38860e1c0 *src/vcglib/wrap/io_trimesh/import_gts.h
 d930c8f6f4065ea8764e7495dae82b49 *src/vcglib/wrap/io_trimesh/import_nvm.h
-feccdf99b6879ab75aaea0795f0252ae *src/vcglib/wrap/io_trimesh/import_obj.h
+9107fca6d7caad4e82ed7def05f301a9 *src/vcglib/wrap/io_trimesh/import_obj.h
 2f9884033596fab2f1a2e9a972f11052 *src/vcglib/wrap/io_trimesh/import_off.h
 44aae1481080c02a4d14479b6e3bd461 *src/vcglib/wrap/io_trimesh/import_out.h
 33c41d82a5236dd74958faedc645b349 *src/vcglib/wrap/io_trimesh/import_ply.h
