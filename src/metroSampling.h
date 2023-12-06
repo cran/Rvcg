@@ -57,7 +57,7 @@ namespace vcg
       USE_HASH_GRID                   = 0x0800,
       USE_AABB_TREE                   = 0x1000,
       USE_OCTREE                      = 0x2000,
-      SILENT                          = 0x7000
+      SILENT                          = 0x8000
     };
   };
   // -----------------------------------------------------------------------------------------------
@@ -352,8 +352,8 @@ namespace vcg
 	n_samples_decimal -= (double) n_samples;
 
         // print progress information
-        if(!(++cnt % print_every_n_elements) && ((Flags&SamplingFlags::SILENT) == 0))
-	  Rprintf("Sampling edge %lu%%\r", (100 * cnt/Edges.size()));
+        //if(!(++cnt % print_every_n_elements) && ((Flags&SamplingFlags::SILENT) == 0))
+	  //Rprintf("Sampling edge %lu%%\r", (100 * cnt/Edges.size()));
       }
     if ((Flags&SamplingFlags::SILENT) == 0)
       Rprintf("                     \r");
