@@ -1,7 +1,7 @@
-5e02e61b98634e761438b6976b9e7ba3 *DESCRIPTION
+e82b2ed7337f03740423b506f6edf193 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
-d7c0ccaf6b617450575872a399311a22 *NAMESPACE
-6c677d82237818c184cef3d2d3246526 *R/Rvcg-package.R
+28d9239ddf432cac139ef68e760c6f2e *NAMESPACE
+d0176e47907646fe97182fd27881077a *R/Rvcg-package.R
 2afb2cdada828c2f13c0dd878b77b341 *R/meshInfo.r
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 176d68914c5928cd62c4a11219274300 *R/normorient.r
@@ -19,7 +19,7 @@ b7904c9910a25d063b935da8a20a85ff *R/vcgClost.r
 6f8ba72a1b5ef717c366fdaa3d44b750 *R/vcgGetEdge.r
 5c7802f645e47624c8c0123a44e0ba9f *R/vcgImport.r
 91e5765a6fb502235296b0d2a359d363 *R/vcgIsolated.r
-e245bdd49f4a2e14ee4e11b46dd38405 *R/vcgIsosurface.r
+0bd124ba4e6af980a3e61538cc83b75d *R/vcgIsosurface.r
 08b67e59e4fc72b648779c0995a7a8f6 *R/vcgIsotropicRemeshing.r
 27dffee7830a3dc8a9d750b8cf283b38 *R/vcgKDtree.r
 589871970e6a63e5e0039d857306fea0 *R/vcgKmeans.r
@@ -32,7 +32,7 @@ fb792b1ebe61d97bc5b66062a42f7eaf *R/vcgPlyRead.r
 1d58c49d13a41fe1b39bb99f24ffc47c *R/vcgQEdecim.r
 e9b4ab6c29134ae1349b0d7d721cdeaa *R/vcgRaySearch.r
 50528f63b60b13441518c1c73d5bec12 *R/vcgSample.r
-6faf71b24cd2e46931e9bbcce054dbd6 *R/vcgSmooth.r
+dd8459a5a8d11504d90d3ef086b90579 *R/vcgSmooth.r
 22de74c0ee6372b1c8888c75b07ca7ae *R/vcgSubdivide.r
 b295bb7a10c7f0f4d87ea4d4b0ea8a5b *R/vcgUniformRemesh.r
 6003b877258a025a974edbbc65496042 *R/vcgUpdateNormals.r
@@ -44,9 +44,9 @@ faf0a86433e3ef7bd49677856e2e0534 *cleanup
 46d5ac2e64067f09e27b51e00100194c *data/humface.rda
 db17f2c29701d7264f7365e9cd1b702d *inst/CITATION
 82859a94dba98071d74f06fbebc62cd4 *inst/COPYRIGHTS
-73967d49bb5fae7538d36d39fdc0cf56 *inst/NEWS.Rd
+267aa425a432d5b0bb5dbc90eed8c1a8 *inst/NEWS.Rd
 df6fedee25f982212d0432241728d1b0 *man/Rvcg-deprecated.Rd
-40180a59408c5c2957cee3c52b993f3e *man/Rvcg-package.Rd
+0c40af7233a72b32f1081c5983778951 *man/Rvcg-package.Rd
 8557949e2a406f81ecfa32f58d24f94b *man/checkFaceOrientation.Rd
 50faefef4ae41cc9df0bf054c0793e21 *man/dummyhead.Rd
 eb6b8037f5b83f17bd739f9dd19b92bc *man/humface.Rd
@@ -89,7 +89,8 @@ cd6de11ac4f3d080d48ce7251bf0f147 *man/vcgQEdecim.Rd
 6de580f05f4eaf82e75fed0f2e13700d *man/vcgRaySearch.Rd
 40c4d4304224de8fde6b81bbac6d5cf1 *man/vcgSample.Rd
 43ebf867e3b2b1c268488beae9371266 *man/vcgSearchKDtree.Rd
-b6881026fcdbba407d943c9bfcf3511e *man/vcgSmooth.Rd
+74da9aad8c6b037bb51c424663e32ae7 *man/vcgSmooth.Rd
+ebff7ecbd7ae173b82f73208b5eb45fe *man/vcgSmoothImplicit.Rd
 c2b0b48134d90026b1901a9cc193fbc7 *man/vcgStlWrite.Rd
 2a1593177dc8df5302770147da7e63ca *man/vcgSubdivide.Rd
 8e3d720b16388013ea74b028844460da *man/vcgUniformRemesh.Rd
@@ -124,7 +125,7 @@ b102ad139f10b0f73ebfeda4f444ee36 *src/Rmeshvol.cpp
 4d0357ce6ddeee151043239a8ebacb7d *src/Rmetro.cpp
 412cadbf7132e976263a2eaf11e9b751 *src/Rplatonic.cpp
 70d1aa8343d58c1615a5fd33b73bb69d *src/Rsample.cpp
-d17328955704abbebf0d6989e261939e *src/Rsmooth.cpp
+1d204400a21e919a606e0fbd87012282 *src/Rsmooth.cpp
 5b83d5c70ce563efacba4f3dd4b962fe *src/Rsubdivision.cpp
 7895c3af0517a438e95a39034853f08c *src/Runiform_resample.cpp
 b35435ce0fc6499966d413857c976f54 *src/RupdateNormals.cpp
@@ -134,7 +135,7 @@ a508cdb0cb3db5d1d86a48e29e80b454 *src/RvcgKD.h
 f5786c83daab8a1d60edb2ecce59689e *src/Volume.h
 be4a6be8d8aeacaaf73c989d7a57cd32 *src/checkListNames.cpp
 0ced371835088c27e3fd2726d8dfe58d *src/checkListNames.h
-d8625bb2d0345989fff623adff4f6035 *src/init.c
+c4843e1502f9319bbfd218d8f65b3b69 *src/init.c
 a7050c774331b68a3486d123ea0d6362 *src/metroSampling.h
 764bbdf0d11dd20e685b5379fbed397f *src/pointcloud.h
 022fa979c15e9b727115d3ee4ba5981f *src/typedef.h
@@ -512,7 +513,7 @@ d930c8f6f4065ea8764e7495dae82b49 *src/vcglib/wrap/io_trimesh/import_nvm.h
 9107fca6d7caad4e82ed7def05f301a9 *src/vcglib/wrap/io_trimesh/import_obj.h
 2f9884033596fab2f1a2e9a972f11052 *src/vcglib/wrap/io_trimesh/import_off.h
 44aae1481080c02a4d14479b6e3bd461 *src/vcglib/wrap/io_trimesh/import_out.h
-33c41d82a5236dd74958faedc645b349 *src/vcglib/wrap/io_trimesh/import_ply.h
+235e7eb3a64279b74647a14f5f22a524 *src/vcglib/wrap/io_trimesh/import_ply.h
 b223c434fafb0ab80485f232119b20cb *src/vcglib/wrap/io_trimesh/import_ptx.h
 bf6084869973c813c2e15157599668c0 *src/vcglib/wrap/io_trimesh/import_raw.h
 897d9f73afa0aa5009aedb4dcb435a88 *src/vcglib/wrap/io_trimesh/import_smf.h
