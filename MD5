@@ -1,7 +1,7 @@
-e82b2ed7337f03740423b506f6edf193 *DESCRIPTION
+0a5b6ad8f89cd6b1376690162d569f72 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
 28d9239ddf432cac139ef68e760c6f2e *NAMESPACE
-d0176e47907646fe97182fd27881077a *R/Rvcg-package.R
+6dbfde44ff53d780a59228c481a5987e *R/Rvcg-package.R
 2afb2cdada828c2f13c0dd878b77b341 *R/meshInfo.r
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 176d68914c5928cd62c4a11219274300 *R/normorient.r
@@ -17,14 +17,14 @@ b7904c9910a25d063b935da8a20a85ff *R/vcgClost.r
 49b3eb0fed3c99c837f91fed3d5b6cc0 *R/vcgCurve.r
 87c99eaae297acc58c8afc4f690c7258 *R/vcgDijkstra.r
 6f8ba72a1b5ef717c366fdaa3d44b750 *R/vcgGetEdge.r
-5c7802f645e47624c8c0123a44e0ba9f *R/vcgImport.r
+c35bcf84a926c2190a5f8a16175c2d16 *R/vcgImport.r
 91e5765a6fb502235296b0d2a359d363 *R/vcgIsolated.r
 0bd124ba4e6af980a3e61538cc83b75d *R/vcgIsosurface.r
 08b67e59e4fc72b648779c0995a7a8f6 *R/vcgIsotropicRemeshing.r
 27dffee7830a3dc8a9d750b8cf283b38 *R/vcgKDtree.r
 589871970e6a63e5e0039d857306fea0 *R/vcgKmeans.r
 4f540d76887c6b831a328f245a50a8eb *R/vcgMeshres.r
-da41228c8976f6896f26a91030a92748 *R/vcgMetro.r
+1a12f808ae01ef79913278710c9b5a41 *R/vcgMetro.r
 2c0d6630474e3ad3cdea0921b0a62e76 *R/vcgOneRingArea.r
 5d6cd6905e2718c3dfbfd7616f6bc33f *R/vcgPlatonic.r
 fb792b1ebe61d97bc5b66062a42f7eaf *R/vcgPlyRead.r
@@ -46,7 +46,7 @@ db17f2c29701d7264f7365e9cd1b702d *inst/CITATION
 82859a94dba98071d74f06fbebc62cd4 *inst/COPYRIGHTS
 267aa425a432d5b0bb5dbc90eed8c1a8 *inst/NEWS.Rd
 df6fedee25f982212d0432241728d1b0 *man/Rvcg-deprecated.Rd
-0c40af7233a72b32f1081c5983778951 *man/Rvcg-package.Rd
+1003205891e9f8fc1ac69b9a75aa348b *man/Rvcg-package.Rd
 8557949e2a406f81ecfa32f58d24f94b *man/checkFaceOrientation.Rd
 50faefef4ae41cc9df0bf054c0793e21 *man/dummyhead.Rd
 eb6b8037f5b83f17bd739f9dd19b92bc *man/humface.Rd
@@ -78,7 +78,7 @@ d67b909da906f3cdbb029bb88be77c6e *man/vcgFaceNormals.Rd
 4aadb7b0419940e01966ac1514a2a057 *man/vcgKDtree.Rd
 a30c0e9cbee74f8f8ac23d94c3cf1b10 *man/vcgKmeans.Rd
 e6ac31198d1d232f8ee755fa543ba357 *man/vcgMeshres.Rd
-2aa68bc0d32d111763a008647083de36 *man/vcgMetro.Rd
+d64e4422aeb716a3a6a52dccc15495df *man/vcgMetro.Rd
 58d277074e2dd64ba54f5d41485f8dd4 *man/vcgNonBorderEdge.Rd
 5761148ebbd43e302d77e9480ee00bf6 *man/vcgObjWrite.Rd
 a1db394d19bc1dd3b9b44c5fc01e8ddd *man/vcgOffWrite.Rd
@@ -99,7 +99,7 @@ d779c942de4f56477a77b3d63874d395 *man/vcgUpdateNormals.Rd
 8973666acd410d68a473a7945e3aa861 *man/vcgVertexNeighbors.Rd
 4ac6564988b414c8fa4fac4e288fde82 *man/vcgVolume.Rd
 7eab2b9d08fd359d3c4958805812dddb *man/vcgWrlWrite.Rd
-96348c5d0a389ec98af04c5d85f56040 *src/Makevars
+80d9402bf316b7ed9a6af884a2050757 *src/Makevars
 b924dc0c7645b747c692aaf1afc15d72 *src/ROneRing.cpp
 c7a5bb3354ee15a093eb3f153935aa2d *src/RQEdecim.cpp
 9ed50f0376302aae93147709b87c2518 *src/RVFadj.cpp
@@ -237,7 +237,7 @@ dc7bb786009b8478e30c7cb985ba361b *src/vcglib/vcg/complex/algorithms/update/flag.
 190bd98426f9c323214e52c2944aa2de *src/vcglib/vcg/complex/algorithms/update/normal.h
 28619ad7ff543aef752ba5d963bffb03 *src/vcglib/vcg/complex/algorithms/update/position.h
 14fb8f7950cb6f5037444584c2c200ef *src/vcglib/vcg/complex/algorithms/update/quality.h
-cf39fb312cb7ca37053c797de84eaf55 *src/vcglib/vcg/complex/algorithms/update/selection.h
+395164d976cee8a62d776c787d5d758c *src/vcglib/vcg/complex/algorithms/update/selection.h
 80d5fd99510c182a12f3b34aee643a99 *src/vcglib/vcg/complex/algorithms/update/texture.h
 a175cf4845d5ce38d15daecfa5c8c864 *src/vcglib/vcg/complex/algorithms/update/topology.h
 24d1ae86913c77814c5bbdab000aa32c *src/vcglib/vcg/complex/algorithms/voronoi_processing.h

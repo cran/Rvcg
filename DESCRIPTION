@@ -1,8 +1,8 @@
 Package: Rvcg
 Type: Package
 Title: Manipulations of Triangular Meshes Based on the 'VCGLIB' API
-Version: 0.23
-Date: 2024-06-25
+Version: 0.24
+Date: 2024-09-19
 Authors@R: c(
     person("Stefan", "Schlager",, "zarquon42@gmail.com", c("aut", "cre", "cph")),
     person("Girinon", "Francois",,, c("ctb")),
@@ -35,11 +35,11 @@ URL: https://github.com/zarquon42b/Rvcg,
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 NeedsCompilation: yes
-Packaged: 2024-06-25 08:28:48 UTC; schlager
+Packaged: 2024-09-19 17:21:39 UTC; schlager
 Author: Stefan Schlager [aut, cre, cph],
   Girinon Francois [ctb],
   Tim Schaefer [ctb],
   Zhengjia Wang [ctb]
 Maintainer: Stefan Schlager <zarquon42@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-06-27 09:50:02 UTC
+Date/Publication: 2024-09-20 14:40:02 UTC
