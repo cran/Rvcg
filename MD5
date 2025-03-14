@@ -1,7 +1,7 @@
-0a5b6ad8f89cd6b1376690162d569f72 *DESCRIPTION
+4e5219b4e9d96c7e7a460cb0debe4b70 *DESCRIPTION
 70421679862083dcc8f49a7760416872 *LICENSE
-28d9239ddf432cac139ef68e760c6f2e *NAMESPACE
-6dbfde44ff53d780a59228c481a5987e *R/Rvcg-package.R
+ac2ed906e1ec261f7479f866c3e0df13 *NAMESPACE
+65fc0d199da26e5f7f6bbd999d99efda *R/Rvcg-package.R
 2afb2cdada828c2f13c0dd878b77b341 *R/meshInfo.r
 6591229d45326b03388b0ce986966fba *R/meshintegrity.r
 176d68914c5928cd62c4a11219274300 *R/normorient.r
@@ -30,7 +30,7 @@ c35bcf84a926c2190a5f8a16175c2d16 *R/vcgImport.r
 fb792b1ebe61d97bc5b66062a42f7eaf *R/vcgPlyRead.r
 535fb822a93862856ce4c6e0b099851a *R/vcgPlyWrite.r
 1d58c49d13a41fe1b39bb99f24ffc47c *R/vcgQEdecim.r
-e9b4ab6c29134ae1349b0d7d721cdeaa *R/vcgRaySearch.r
+a900967f08a16f234ef5a7a48f170a51 *R/vcgRaySearch.r
 50528f63b60b13441518c1c73d5bec12 *R/vcgSample.r
 dd8459a5a8d11504d90d3ef086b90579 *R/vcgSmooth.r
 22de74c0ee6372b1c8888c75b07ca7ae *R/vcgSubdivide.r
@@ -46,7 +46,7 @@ db17f2c29701d7264f7365e9cd1b702d *inst/CITATION
 82859a94dba98071d74f06fbebc62cd4 *inst/COPYRIGHTS
 267aa425a432d5b0bb5dbc90eed8c1a8 *inst/NEWS.Rd
 df6fedee25f982212d0432241728d1b0 *man/Rvcg-deprecated.Rd
-1003205891e9f8fc1ac69b9a75aa348b *man/Rvcg-package.Rd
+3ad3adfc34eb4c555ff600ef6a4ca105 *man/Rvcg-package.Rd
 8557949e2a406f81ecfa32f58d24f94b *man/checkFaceOrientation.Rd
 50faefef4ae41cc9df0bf054c0793e21 *man/dummyhead.Rd
 eb6b8037f5b83f17bd739f9dd19b92bc *man/humface.Rd
@@ -54,6 +54,7 @@ aa9b45edd6521946da4456b48adad589 *man/meshInfo.Rd
 4b3ddb2d3d9409a98a3ae396306bb5bc *man/meshintegrity.Rd
 b6cdac210b59c5a638aef435b70b9d24 *man/nfaces.Rd
 28cc7bc5ff8c7bf903702bb066d4cabc *man/nverts.Rd
+123fc306eae2d7afd1b751488a6324fe *man/raysearchMulti.Rd
 c1f9d9471f7f7be962c9a937d4fb4002 *man/setRays.Rd
 807ff809052adde966a7b67b2d83248a *man/vcgArea.Rd
 fce2d3000d827a0cfd9fa989cca75aba *man/vcgBallPivoting.Rd
@@ -99,7 +100,7 @@ d779c942de4f56477a77b3d63874d395 *man/vcgUpdateNormals.Rd
 8973666acd410d68a473a7945e3aa861 *man/vcgVertexNeighbors.Rd
 4ac6564988b414c8fa4fac4e288fde82 *man/vcgVolume.Rd
 7eab2b9d08fd359d3c4958805812dddb *man/vcgWrlWrite.Rd
-80d9402bf316b7ed9a6af884a2050757 *src/Makevars
+96348c5d0a389ec98af04c5d85f56040 *src/Makevars
 b924dc0c7645b747c692aaf1afc15d72 *src/ROneRing.cpp
 c7a5bb3354ee15a093eb3f153935aa2d *src/RQEdecim.cpp
 9ed50f0376302aae93147709b87c2518 *src/RVFadj.cpp
@@ -378,7 +379,7 @@ b4f7fe94052f717c952ee5e9fdccfdcf *src/vcglib/vcg/space/tetra3.h
 ebb0faf966bf74c0bed66b7145a509d5 *src/vcglib/wrap/bmt/bmt.cpp
 fdc7fd08336b545ad68f030c7703267f *src/vcglib/wrap/bmt/bmt.h
 b7a25640de0b89014a862e4cb10f473a *src/vcglib/wrap/bmt/strip_mesh.h
-12093144d994097777634a777531d759 *src/vcglib/wrap/callback.h
+d712f9ae09820c2ec8a3494ff1b04247 *src/vcglib/wrap/callback.h
 9b1ad1910f7e616742267b60564639aa *src/vcglib/wrap/dae/colladaformat.h
 0ac3853c1b9dd4d8b8025cbd7462333e *src/vcglib/wrap/dae/poly_triangulator.h
 ad1d46b0c120cdd3dd99b53d6d6c00be *src/vcglib/wrap/dae/util_dae.h
